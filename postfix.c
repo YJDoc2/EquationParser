@@ -18,7 +18,7 @@ int priority(char c){
 
 
 
-
+//* convers infix operation to psuedo operation
 void convert(){
 
     int i =0,j=0,len=0;

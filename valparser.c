@@ -1,8 +1,10 @@
 #include "./stack.c"
 #include<string.h>
 
+//* Actual Infix Array
 char infix[250];
 
+//* prepares the input array for converting to postifx array
 void prepParse(){
 
     char pre;
@@ -44,6 +46,7 @@ void prepParse(){
 
 }
 
+//* converts numbers in in array to float number
 float parseVal(int k){
     int dec =0;
     float val = 0.0;

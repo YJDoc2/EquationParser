@@ -1,5 +1,7 @@
 
-
+//*in - input array
+//* postfix - array for psuedo postfix expression
+//* valArr - array for stoaring values in expression
 char in[200],postfix[200], opSt[50];
 float valArr[50],evalSt[20];
 int opTop =-1,vTop =-1,eTop=-1;
