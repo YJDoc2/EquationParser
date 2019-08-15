@@ -104,13 +104,17 @@ void eval(){
 void main(){
 
     float val;
-    printf("Give the expression\n");
-    scanf("%s",in);
-    prepParse();
-    convert();
-    eval();
-    val = popEval();
-    printf("Answer is %f \n",nexttoward(val,val+1));
-
+    printf("Give the expression To Evaluate.\n");
+    printf("Supported Operators are: \n- : Negation\n+:Addition\n-:Subtraction\n*:Multiplication\n/:Division\n %%:Integer Division\n** or e or E : Exponentiation\n");
+    printf("Give q or Q to quit.\n");
+    while(1){
+        scanf("%s",in);
+        if(in[0]=='q'|| in[0] == 'Q'){break;}
+        prepParse();
+        convert();
+        eval();
+        val = popEval();
+        printf("Answer is %f \n",nexttoward(val,val+1));
+    }
 
 }

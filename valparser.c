@@ -20,9 +20,10 @@ void prepParse(){
     while(in[i]!='\0'){
         if(isdigit(in[i])||in[i] =='.'){
             infix[j] = in[i];
+            pre = in[i];
             i++;
             j++;
-            pre = in[i];
+           
         }else if(in[i] == '*' && in[i+1] == '*'){
             infix[j] = 'E';
             j++;i+=2;
