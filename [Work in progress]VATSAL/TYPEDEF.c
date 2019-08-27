@@ -1,9 +1,15 @@
+//nodePf=NodePostfix;
 #include<stdio.h>
-typedef struct node
+typedef struct NodeOp
 {
-    float data;
-    struct node *next;
-}Node;
+    float op;
+    struct NodeOp *next;
+}nodeOp;
+typedef struct NodePostfix
+{
+    float var;
+    struct NodePostfix *next;
+}nodePf;
 typedef struct result
 {
     float dataR;
