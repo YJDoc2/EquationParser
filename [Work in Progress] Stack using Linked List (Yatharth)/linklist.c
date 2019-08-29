@@ -3,21 +3,21 @@
 //P = Postfix
 #include<stdio.h>
 #include<stdlib.h>
-struct NodeOp //For Operators Stack
+typedef struct NodeOp //For Operators Stack
 {
 	char op;
 	struct NodeOp *next;
-};
-struct NodePostfix //For Postfix Expression
+}NodeO;
+typedef struct NodePostfix //For Postfix Expression
 {
 	char var;
 	struct NodePostfix *next;
-};
-struct NodeOp *Optop, *tempOp;			//Global Decalaration for Top and Temp of Operator Link List Stack
-struct NodePostfix *Ptop, *tempP;		//Global Decalaration for Top and Temp of Postfix Link List Stack
+}NodeP;
+NodeO *Optop, *tempOp;			//Global Decalaration for Top and Temp of Operator Link List Stack
+NodeP *Ptop, *tempP;		//Global Decalaration for Top and Temp of Postfix Link List Stack
 void PushOp(char opr)
 {
-	struct NodeOp *newnodeOp = (struct NodeOp *)malloc(sizeof(struct NodeOp));
+	NodeO *newnodeOp = (NodeO *)malloc(sizeof(NodeO));
 	newnodeOp->op=opr;
 	if (Optop==NULL)
 	{
@@ -49,6 +49,7 @@ char PopOp()
 //Display Function Only For Debugging
 void DisplayOp()
 {
+	int i=3;
 	tempOp=Optop;
 	if (Optop==NULL)
 	{
@@ -56,16 +57,17 @@ void DisplayOp()
 	}
 	else
 	{
-		while (tempOp!=NULL)
+		while (i>0)
 		{
 			printf("%c \n",tempOp->op);			//Display the operators from top -> bottom
 			tempOp=tempOp->next;
+			i--;
 		}
 	}
 }
 void PushP(char vari)
 {
-	struct NodePostfix *newnodeP =(struct NodePostfix *)malloc(sizeof(struct NodePostfix));
+	NodeP *newnodeP =(NodeP *)malloc(sizeof(NodeP));
 	newnodeP->var=vari;
 	tempP=Ptop;
 	if (tempP==NULL)
@@ -97,6 +99,7 @@ char PopP()
 }
 void DisplayP()
 {
+	int i=3;
 	tempP=Ptop;
 	if (Ptop==NULL)
 	{
@@ -104,17 +107,18 @@ void DisplayP()
 	}
 	else
 	{
-		while (tempP!=NULL)
+		while (i>0)
 		{
 			printf("%c \n",tempP->var);			//Display the variables from top -> bottom
 			tempP=tempP->next;
+			i--;
 		}
 	}
 }
 void main()										//For Debugging
 {
-	printf("Enter 3 operator\n");
 	PushOp('+');
+	DisplayOp();
 	PushOp('*');
 	PushOp('/');
 	printf("PopOp=%c",PopOp());
