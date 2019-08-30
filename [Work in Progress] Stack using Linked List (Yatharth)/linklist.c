@@ -10,7 +10,7 @@ typedef struct NodeOp //For Operators Stack
 }NodeO;
 typedef struct NodePostfix //For Postfix Expression
 {
-	char var;
+	float var;
 	struct NodePostfix *next;
 }NodeP;
 NodeO *Optop, *tempOp;			//Global Decalaration for Top and Temp of Operator Link List Stack
@@ -49,7 +49,7 @@ char PopOp()
 //Display Function Only For Debugging
 void DisplayOp()
 {
-	int i=3;
+	int i=2;
 	tempOp=Optop;
 	if (Optop==NULL)
 	{
@@ -65,12 +65,11 @@ void DisplayOp()
 		}
 	}
 }
-void PushP(char vari)
+void PushP(float vari)
 {
 	NodeP *newnodeP =(NodeP *)malloc(sizeof(NodeP));
 	newnodeP->var=vari;
-	tempP=Ptop;
-	if (tempP==NULL)
+	if (Ptop==NULL)
 	{
 		Ptop=newnodeP;
 	}
@@ -80,9 +79,9 @@ void PushP(char vari)
 		Ptop=newnodeP;					//Attaches NewNode before (on top of) the top node in the stack
 	}
 }
-char PopP()
+float PopP()
 {
-	char variable;
+	float variable;
 	if (Ptop==NULL)
 	{
 		printf("Postfix Stack List Empty Error\n");
@@ -99,7 +98,6 @@ char PopP()
 }
 void DisplayP()
 {
-	int i=3;
 	tempP=Ptop;
 	if (Ptop==NULL)
 	{
@@ -107,11 +105,10 @@ void DisplayP()
 	}
 	else
 	{
-		while (i>0)
+		while (tempP!=NULL)
 		{
-			printf("%c \n",tempP->var);			//Display the variables from top -> bottom
+			printf("%f \n",tempP->var);			//Display the variables from top -> bottom
 			tempP=tempP->next;
-			i--;
 		}
 	}
 }
@@ -121,13 +118,13 @@ void main()										//For Debugging
 	DisplayOp();
 	PushOp('*');
 	PushOp('/');
-	printf("PopOp=%c",PopOp());
+	printf("PopOp=%c \n",PopOp());
 	DisplayOp();
-	printf("Enter 3 variables\n");
-	PushP('a');
-	PushP('b');
-	PushP('c');
-	printf("PopP=%c",PopP());
+	printf("The 3 variables are:\n");
+	PushP(1.5);
+	PushP(2);
+	PushP(3);
+	printf("PopP=%f \n",PopP());
 	DisplayP();
 }
 
