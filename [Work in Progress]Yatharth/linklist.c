@@ -1,3 +1,6 @@
+//========================================================
+//=====================PostFix Stack======================
+
 //Suffix / Prefix :-
 //Op = Operator
 //P = Postfix
@@ -16,6 +19,13 @@ typedef struct NodePostfix //For Postfix Expression
 	float var;
 	struct NodePostfix *next;
 }NodeP;
+//========================================General Stack=====================================================
+typedef struct varStack
+{
+	float var;
+	struct varStack *next;
+}gStack;
+gStack *top,*temp;			    //General Stack
 NodeO *Optop, *tempOp;			//Global Decalaration for Top and Temp of Operator Link List Stack
 NodeP *Ptop, *tempP;		//Global Decalaration for Top and Temp of Postfix Link List Stack
 void PushOp(char opr)
@@ -116,6 +126,54 @@ void DisplayP()
 		}
 	}
 }
-
+//================================Functions of General Stack========================================
+void push(float variable)
+{
+	gStack *newnode =(gStack *)malloc(sizeof(gStack));
+	newnode->next=NULL;
+	newnode->var=variable;
+	if (top==NULL)
+	{
+		top=newnode;
+	}
+	else
+	{
+		newnode->next=top;
+		top=newnode;					//Attaches NewNode before (on top of) the top node in the stack
+	}
+}
+float pop()
+{
+	float variable;
+	if (top==NULL)
+	{
+		printf("Postfix Stack List Empty Error\n");
+		return 0;
+	}
+	else
+	{
+		variable=top->var;
+		temp=top;
+		top=top->next;
+		free(temp);
+		return variable;
+	}
+}
+void display()
+{
+	temp=top;
+	if (top==NULL)
+	{
+		printf("top is unassigned or the list is empty \n");
+	}
+	else
+	{
+		while (temp!=NULL)
+		{
+			printf("%f \n",temp->var);			//Display the variables from top -> bottom
+			temp=temp->next;
+		}
+	}
+}
 
 #endif
