@@ -18,6 +18,7 @@ NodeP *Ptop, *tempP;		//Global Decalaration for Top and Temp of Postfix Link Lis
 void PushOp(char opr)
 {
 	NodeO *newnodeOp = (NodeO *)malloc(sizeof(NodeO));
+	newnodeOp->next=NULL;
 	newnodeOp->op=opr;
 	if (Optop==NULL)
 	{
@@ -57,17 +58,17 @@ void DisplayOp()
 	}
 	else
 	{
-		while (i>0)
+		while (tempOp!=NULL)
 		{
 			printf("%c \n",tempOp->op);			//Display the operators from top -> bottom
 			tempOp=tempOp->next;
-			i--;
 		}
 	}
 }
 void PushP(float vari)
 {
 	NodeP *newnodeP =(NodeP *)malloc(sizeof(NodeP));
+	newnodeP->next=NULL;
 	newnodeP->var=vari;
 	if (Ptop==NULL)
 	{
