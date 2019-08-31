@@ -3,6 +3,9 @@
 //P = Postfix
 #include<stdio.h>
 #include<stdlib.h>
+
+#ifndef LINKEDLIST
+#define LINKEDLIST
 typedef struct NodeOp //For Operators Stack
 {
 	char op;
@@ -50,7 +53,7 @@ char PopOp()
 //Display Function Only For Debugging
 void DisplayOp()
 {
-	int i=2;
+	//int i=2;
 	tempOp=Optop;
 	if (Optop==NULL)
 	{
@@ -113,19 +116,6 @@ void DisplayP()
 		}
 	}
 }
-void main()										//For Debugging
-{
-	PushOp('+');
-	DisplayOp();
-	PushOp('*');
-	PushOp('/');
-	printf("PopOp=%c \n",PopOp());
-	DisplayOp();
-	printf("The 3 variables are:\n");
-	PushP(1.5);
-	PushP(2);
-	PushP(3);
-	printf("PopP=%f \n",PopP());
-	DisplayP();
-}
 
+
+#endif
