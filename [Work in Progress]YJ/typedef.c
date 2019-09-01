@@ -20,6 +20,7 @@ typedef struct var
 {
     float val;
     char name[30];
+    char info[30];
     struct var *next;
 }Var;
 

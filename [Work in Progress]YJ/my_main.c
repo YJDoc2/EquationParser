@@ -1,9 +1,11 @@
 #include<stdio.h>
+#include<string.h>
 #include "./typedef.c"
 #include "./variables.c"
 #include "./inbuilt.c"
 #include "./config.c"
 #include "./parser.c"
+#include "./constants.c"
 /*
 * This is checking main file for variables and typedef
 
@@ -77,13 +79,9 @@
 }*/
 void main(){
 
-    char in[50];
-    Result ret;
-    printf("Give Expression :\n");
-    scanf("%s",in);
-    ret = convert(in);
-    printf("C -> %s\n",postfix);
-    ret = eval();
-    printf("Stat : %d ; Data : %f ; Info : %s\n",ret.status,ret.data,ret.error_info);
-
+   char in[5];
+   fgets(in,5,stdin);
+   if(strchr(in,'\n') != NULL){
+       printf("%s : found\n",in);
+   }
 }
