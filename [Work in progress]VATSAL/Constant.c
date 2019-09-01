@@ -11,7 +11,7 @@ Result setConst(char *name,float val){
     strcpy(temp->name,name);
     temp->val = val;
 
-    if(var_start == NULL){ //For First Constant
+    if(const_start == NULL){ //For First Constant
         const_start = temp;
         const_end = temp;
 
