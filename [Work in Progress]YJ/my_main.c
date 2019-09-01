@@ -3,11 +3,12 @@
 #include "./variables.c"
 #include "./inbuilt.c"
 #include "./config.c"
+#include "./parser.c"
 /*
 * This is checking main file for variables and typedef
 
 */
-void main(){
+/*void main(){
 
     int c = -1;
     int place;
@@ -72,5 +73,17 @@ void main(){
     }
 
 
+
+}*/
+void main(){
+
+    char in[50];
+    Result ret;
+    printf("Give Expression :\n");
+    scanf("%s",in);
+    ret = convert(in);
+    printf("C -> %s\n",postfix);
+    ret = eval();
+    printf("Stat : %d ; Data : %f ; Info : %s\n",ret.status,ret.data,ret.error_info);
 
 }

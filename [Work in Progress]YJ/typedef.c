@@ -9,20 +9,10 @@ typedef enum
 }resultStatus;
 
 
-
-typedef struct NodeOp
-{
-    float op;
-    struct NodeOp *next;
-}nodeOp;
-typedef struct NodePostfix
-{
-    float var;
-    struct NodePostfix *next;
-}nodePf;
 typedef struct result
 {
     float data;
+    float subdata[5];
     resultStatus status;
     char error_info[100];
 }Result;

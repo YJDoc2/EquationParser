@@ -6,6 +6,7 @@
 //P = Postfix
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 #ifndef STACK
 #define STACK
@@ -25,49 +26,70 @@ typedef struct varStack
 	float var;
 	struct varStack *next;
 }gStack;
-gStack *top,*temp;			    //General Stack
-NodeO *Optop, *tempOp;			//Global Decalaration for Top and Temp of Operator Link List Stack
-NodeP *Ptop, *tempP;		//Global Decalaration for Top and Temp of Postfix Link List Stack
-void PushOp(char opr)
+gStack *top,*gTemp;			    //General Stack
+NodeO *opTop, *tempOp;			//Global Decalaration for Top and Temp of Operator Link List Stack
+NodeP *pTop, *tempP;		//Global Decalaration for Top and Temp of Postfix Link List Stack
+void pushOp(char opr)
 {
 	NodeO *newnodeOp = (NodeO *)malloc(sizeof(NodeO));
 	newnodeOp->next=NULL;
 	newnodeOp->op=opr;
-	if (Optop==NULL)
+	if (opTop==NULL)
 	{
-		Optop=newnodeOp;
+		opTop=newnodeOp;
 	}
 	else
 	{
-		newnodeOp->next=Optop;
-		Optop=newnodeOp;					//Attaches NewNode before (on top of) the top node in the stack
+		newnodeOp->next=opTop;
+		opTop=newnodeOp;					//Attaches NewNode before (on top of) the top node in the stack
 	}
 }
-char PopOp()
+Result popOp()
 {
 	char operator;
-	if (Optop==NULL)
+	Result ret;
+	if (opTop==NULL)
 	{
-		printf("Operator Stack List Empty Error\n");
-		return 0;
+		ret.status = ERROR;
+		strcpy(ret.error_info,"Operator Stack List Empty");
 	}
 	else
 	{
-		operator=Optop->op;
-		tempOp=Optop;
-		Optop=Optop->next;
+		operator=opTop->op;
+		tempOp=opTop;
+		opTop=opTop->next;
 		free(tempOp);
-		return operator;
+		ret.data = operator;
+		ret.status = SUCCESS;
 	}
+	return ret;
+}
+
+Result peekOp(){
+
+	char operator;
+	Result ret;
+	if (opTop==NULL)
+	{
+		ret.status = ERROR;
+		strcpy(ret.error_info,"Operator Stack List Empty");
+	}
+	else
+	{
+		ret.data = opTop->op;
+		ret.status = SUCCESS;
+	}
+	return ret;
+	
 }
 //Display Function Only For Debugging
-void DisplayOp()
+void displayOp()
 {
 	//int i=2;
-	tempOp=Optop;
-	if (Optop==NULL)
+	tempOp=opTop;
+	if (opTop==NULL)
 	{
-		printf("Optop is unassigned or the list is empty \n");
+		printf("opTop is unassigned or the list is empty \n");
 	}
 	else
 	{
@@ -78,44 +100,47 @@ void DisplayOp()
 		}
 	}
 }
-void PushP(float vari)
+void pushP(float vari)
 {
 	NodeP *newnodeP =(NodeP *)malloc(sizeof(NodeP));
 	newnodeP->next=NULL;
 	newnodeP->var=vari;
-	if (Ptop==NULL)
+	if (pTop==NULL)
 	{
-		Ptop=newnodeP;
+		pTop=newnodeP;
 	}
 	else
 	{
-		newnodeP->next=Ptop;
-		Ptop=newnodeP;					//Attaches NewNode before (on top of) the top node in the stack
+		newnodeP->next=pTop;
+		pTop=newnodeP;					//Attaches NewNode before (on top of) the top node in the stack
 	}
 }
-float PopP()
+Result popP()
 {
 	float variable;
-	if (Ptop==NULL)
+	Result ret;
+	if (pTop==NULL)
 	{
-		printf("Postfix Stack List Empty Error\n");
-		return 0;
+		strcpy(ret.error_info,"Postfix Stack List Empty");
+		ret.status = ERROR;
 	}
 	else
 	{
-		variable=Ptop->var;
-		tempP=Ptop;
-		Ptop=Ptop->next;
+		variable=pTop->var;
+		tempP=pTop;
+		pTop=pTop->next;
 		free(tempP);
-		return variable;
+		ret.status = SUCCESS;
+		ret.data = variable;
 	}
+	return ret;
 }
-void DisplayP()
+void pisplayP()
 {
-	tempP=Ptop;
-	if (Ptop==NULL)
+	tempP=pTop;
+	if (pTop==NULL)
 	{
-		printf("Ptop is unassigned or the list is empty \n");
+		printf("pTop is unassigned or the list is empty \n");
 	}
 	else
 	{
@@ -142,38 +167,41 @@ void push(float variable)
 		top=newnode;					//Attaches NewNode before (on top of) the top node in the stack
 	}
 }
-float pop()
+Result pop()
 {
 	float variable;
+	Result ret;
 	if (top==NULL)
-	{
-		printf("Postfix Stack List Empty Error\n");
-		return 0;
+	{	
+		ret.status = ERROR;
+		strcpy(ret.error_info,"General Stack List Empty");
 	}
 	else
 	{
 		variable=top->var;
-		temp=top;
+		gTemp=top;
 		top=top->next;
-		free(temp);
-		return variable;
+		free(gTemp);
+		ret.status= SUCCESS;
+		ret.data = variable;
 	}
+	return ret;
 }
-void display()
+/*void display()
 {
-	temp=top;
+	gTemp=top;
 	if (top==NULL)
 	{
 		printf("top is unassigned or the list is empty \n");
 	}
 	else
 	{
-		while (temp!=NULL)
+		while (gTemp!=NULL)
 		{
-			printf("%f \n",temp->var);			//Display the variables from top -> bottom
-			temp=temp->next;
+			printf("%f \n",gTemp->var);			//Display the variables from top -> bottom
+			gTemp=gTemp->next;
 		}
 	}
 }
-
+*/
 #endif
