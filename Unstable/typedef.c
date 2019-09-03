@@ -12,7 +12,6 @@ typedef enum
 typedef struct result
 {
     float data;
-    float subdata[5];
     resultStatus status;
     char error_info[100];
 }Result;

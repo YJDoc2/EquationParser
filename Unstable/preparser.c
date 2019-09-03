@@ -163,7 +163,7 @@ int isop(char a){
 
 char *adjustNegetive(char *in){
 
-    int i=0,j=0;
+    int i=0,j=0,l =0;
     int oNeg =0,open = 0;
     char pre = in[0];
     for(i=0;i<strlen(in);){
@@ -186,7 +186,17 @@ char *adjustNegetive(char *in){
             buf[j++] = in[i++];
             while(i<strlen(in) && oNeg!=0){
                 
-                if(in[i] =='-' && isop(pre)&&(in[i+1] == '(' || in[i+1] == '[' || in[i+1] == '{' )){
+                if(in[i] == '-' && isop(pre) &&(isalnum(in[i+1]) || in[i+1] == '$')){
+                        buf[j++] = '(';
+                        buf[j++] = '0';
+                        buf[j++] = '-';
+                        i++;
+                        while(i<strlen(in) && !isop(in[i])){
+                            pre = in[i];
+                            buf[j++] = in[i++];
+                        }
+                        buf[j++] = ')';
+                }else if(in[i] =='-' && isop(pre) &&(in[i+1] == '(' || in[i+1] == '[' || in[i+1] == '{' )){
                     oNeg++;i++;open++;
                     buf[j++] = '(';
                     buf[j++] = '0';
@@ -218,6 +228,12 @@ char *adjustNegetive(char *in){
         }
         
     }
+
+    while(oNeg>0 || open>0){
+        buf[j++] = ')';
+        oNeg--;
+        open--;
+    }
     return buf;
 }
 
@@ -227,7 +243,11 @@ Result preparse(char in[]){
     char pre,buf[150],temp[150];
     int i =0,j=0,t=0;
     Result ret,t1;
+    memset(buf,'\0',150);
+    memset(temp,'\0',150);
     strcpy(temp,adjustNegetive(in));
+    
+    //printf("buf-> %s",buf);
     while(i<strlen(temp)){
 
         if(isalnum(temp[i]) || temp[i] == '$'){
@@ -253,6 +273,7 @@ Result preparse(char in[]){
             j++;
         }
     }
+    
     t1 = subVal(buf);
     if(t1.status != SUCCESS){
         return t1;

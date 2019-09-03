@@ -125,6 +125,9 @@ Result convert(char in[]){
         postfix[j] = t;
         j++;
     }
+    temp.status = SUCCESS;
+    return temp;
+
 }
 
 Result eval(){
@@ -162,29 +165,6 @@ Result eval(){
     ret.data = r.data;
     return ret;
 
-
-}
-
-void main(){
-
-   /*char in[5];
-   fgets(in,5,stdin);
-   if(strchr(in,'\n') != NULL){
-       printf("%s : found\n",in);
-   }*/
-
-   char in[10];
-   Result ret;
-   fgets(in,10,stdin);
-   in[strlen(in)-1] = '\0';
-   setVar("check",10);
-   setDefVar(5,3);
-   //showVars();
-   removeSpaces(in);
-   //ret = checkAssign(in);
-   ret = convert(in);
-   if(ret.status == SUCCESS)ret = eval();
-   printf("Stat : %d ; Data : %0.5e ;Info : %s\n",ret.status,ret.data,ret.error_info);
 
 }
 #endif

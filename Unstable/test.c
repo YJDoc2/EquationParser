@@ -6,7 +6,7 @@
 char buf[50];
 int isop(char a){
     
-    return a=='+' || a=='-' || a=='*' || a=='/' ||a=='%' || a=='E';
+    return a=='+' || a=='-' || a=='*' || a=='/' ||a=='%' || a=='E' || a =='(' || a=='[' || a== '{';
 }
 void pushbrack(char i){
 
@@ -41,7 +41,17 @@ char *adjustNegetive(char *in){
             buf[j++] = in[i++];
             while(i<strlen(in) && oNeg!=0){
                 
-                if(in[i] =='-' && isop(pre)&&(in[i+1] == '(' || in[i+1] == '[' || in[i+1] == '{' )){
+                if(in[i] == '-' && isop(pre) &&(isalnum(in[i+1]) || in[i+1] == '$')){
+                    buf[j++] = '(';
+                    buf[j++] = '0';
+                    buf[j++] = '-';
+                    i++;
+                    while(i<strlen(in) && !isop(in[i])){
+                        pre = in[i];
+                        buf[j++] = in[i++];
+                    }
+                    buf[j++] = ')';
+                }else if(in[i] =='-' && isop(pre) &&(in[i+1] == '(' || in[i+1] == '[' || in[i+1] == '{' )){
                     oNeg++;i++;open++;
                     buf[j++] = '(';
                     buf[j++] = '0';
@@ -72,6 +82,11 @@ char *adjustNegetive(char *in){
             buf[j++] = in[i++];
         }
         
+    }
+    while(oNeg>0 || open>0){
+        buf[j++] = ')';
+        oNeg--;
+        open--;
     }
 
     return buf;

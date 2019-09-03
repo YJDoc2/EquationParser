@@ -78,23 +78,59 @@
 }*/
 void main(){
 
-   /*char in[5];
-   fgets(in,5,stdin);
-   if(strchr(in,'\n') != NULL){
-       printf("%s : found\n",in);
-   }*/
-
-   char in[10];
-   Result ret;
-   fgets(in,10,stdin);
-   in[strlen(in)-1] = '\0';
-   setVar("check",10);
-   setDefVar(5,3);
-   //showVars();
-   removeSpaces(in);
-   //ret = checkAssign(in);
-   ret = convert(in);
-   ret = eval();
-   printf("Stat : %d ; Data : %e ;Info : %s\n",ret.status,ret.data,ret.error_info);
-
+    int c =-1,place =0;
+    char name[30];
+    float val;
+    char in[50];
+    Result ret,res;
+    initConst();
+    /*printf("Give Expression : ");
+                fgets(in,50,stdin);
+                in[strlen(in)-1] = '\0';
+                removeSpaces(in);
+                ret = convert(in);
+                if(ret.status == SUCCESS)ret = eval();
+                printf("Stat : %d ; Data : %0.5e ;Info : %s\n",ret.status,ret.data,ret.error_info);*/
+                
+       
+    while(c!=5){
+        printf("\n1.set variable\n2.set default variable $0-$9\n3.print variables\n4.evaluate expression\n5.Quit\n");
+        scanf("%d",&c);
+        getc(stdin);
+        switch(c){
+            
+            case 1:{fflush(stdin);
+                printf("name <space> value\n");
+                scanf("%s %f",name,&val);
+                if(strlen(name)>30){
+                    printf("Too big name");
+                }else{
+                    res = setVar(name,val);
+                    if(res.status != SUCCESS){
+                        printf("Error : %d, info :%s\n",res.status,res.error_info);
+                    }
+                }
+                break;}
+            case 2:{fflush(stdin);
+                printf("place <space> value\n");
+                scanf("%d %f",&place,&val);
+                res = setDefVar(place,val);
+                if(res.status != SUCCESS){
+                    printf("ERROR : %d, info :%s\n",res.status,res.error_info);}
+                break;}
+            case 3: {showVars();break;}
+            case 4:{
+                printf("Give Expression : ");
+                fgets(in,50,stdin);
+                in[strlen(in)-1] = '\0';
+                removeSpaces(in);
+                ret = convert(in);
+                if(ret.status == SUCCESS)ret = eval();
+                printf("Stat : %d ; Data : %0.5e ;Info : %s\n",ret.status,ret.data,ret.error_info);
+                break;
+            }
+            case 5:break;
+            default : break;
+        }
+    }
 }
