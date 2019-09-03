@@ -2,8 +2,6 @@
 #include<string.h>
 #include "./typedef.c"
 #include "./variables.c"
-#include "./inbuilt.c"
-#include "./config.c"
 #include "./preparser.c"
 #include "./parser.c"
 #include "./constants.c"
@@ -89,6 +87,7 @@ void main(){
    char in[10];
    Result ret;
    fgets(in,10,stdin);
+   in[strlen(in)-1] = '\0';
    setVar("check",10);
    setDefVar(5,3);
    //showVars();

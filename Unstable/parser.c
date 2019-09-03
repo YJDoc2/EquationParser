@@ -31,7 +31,7 @@ int priority(char c){
     }
 }
 
-Result parseVal(char inString[],int start){
+/*Result parseVal(char inString[],int start){
     int dec =0;
     float val = 0.0;
     int count;
@@ -51,7 +51,7 @@ Result parseVal(char inString[],int start){
     ret.status = SUCCESS;
     ret.subdata[0] = start;
     return ret;
-}
+}*/
 
 //!! DOES NOT CONVERT ** TO E
 //!! DO THAT IN PREPARSER
@@ -61,29 +61,39 @@ Result convert(char in[]){
     float val =0.0;
     char x,t;
     Result temp;
-    preparse(in);
+    temp = preparse(in);
+    CHECK(temp,in,0);
+    memset(buf,'\0',150);
+    for(i=0,j=0;i<strlen(infix);i++){
+        if(infix[i] == '*' && infix[i+1] == '*' ){
+            buf[j] = 'E';
+            i++;j++;
+        }else{
+            buf[j] = infix[i];
+            j++;
+        }
+    }
+    strcpy(infix,buf);
     x = infix[0];
+    i =0;j=0;
     while(x!='\0'){
 
-        if(isdigit(x)){
-            temp = parseVal(infix,i);
-            i = temp.subdata[0]-1;
-            enQVar(temp.data);
-            postfix[j] = 'a';
-            j++;    
-        }else if(x =='('){
+        if(x =='v'){
+            postfix[j++] = x;
+        }else if(x =='(' || x =='[' ||x =='{'  ){
             pushOp(x);
-        }else if(x==')'){
+        }else if(x==')' || x ==']' || x =='}'){
             temp = popOp();
             CHECK(temp,infix,i+1);
             t=(char)temp.data;
             
-            while(t != '('){
+            while(t != '(' && t !='[' && t !='{'  ){
                
                 postfix[j] = t;
                 j++;
                 temp = popOp();
                 CHECK(temp,infix,i+1);
+                t = (char)temp.data;
             }
         }else if(x == '+'||x == '-'||x == '*'||x == '/'||x == '%'||x == 'e'||x == 'E'){
             if(opTop ==NULL||priority(x)>priority((char)peekOp().data)){
@@ -124,11 +134,7 @@ Result eval(){
     op = postfix[i];
     Result r,ret;
     while( op != '\0'){
-        if(postfix[i] == 'a'){
-            r = deQVar();
-            CHECK(r,postfix,i+1); 
-            push(r.data);
-        }else if(postfix[i] == 'v'){
+        if(postfix[i] == 'v'){
             r = deQVal();
             CHECK(r,postfix,i+1); 
             push(r.data);
@@ -145,7 +151,6 @@ Result eval(){
                 case '*':{push(op1*op2);break;}
                 case '/':{push(op1/op2);break;}
                 case '%':{push((int)op1%(int)op2);break;}
-                case 'e':
                 case 'E' : {push(pow(op1,op2));break;}
             }
         }
@@ -160,5 +165,26 @@ Result eval(){
 
 }
 
+void main(){
 
+   /*char in[5];
+   fgets(in,5,stdin);
+   if(strchr(in,'\n') != NULL){
+       printf("%s : found\n",in);
+   }*/
+
+   char in[10];
+   Result ret;
+   fgets(in,10,stdin);
+   in[strlen(in)-1] = '\0';
+   setVar("check",10);
+   setDefVar(5,3);
+   //showVars();
+   removeSpaces(in);
+   //ret = checkAssign(in);
+   ret = convert(in);
+   if(ret.status == SUCCESS)ret = eval();
+   printf("Stat : %d ; Data : %0.5e ;Info : %s\n",ret.status,ret.data,ret.error_info);
+
+}
 #endif
