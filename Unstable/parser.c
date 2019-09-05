@@ -31,30 +31,9 @@ int priority(char c){
     }
 }
 
-/*Result parseVal(char inString[],int start){
-    int dec =0;
-    float val = 0.0;
-    int count;
-    Result ret;
-    while(isdigit(inString[start])){
-        val = val*10 + (float)(inString[start]-'0');
-        start++;
-    }
-    if(inString[start] == '.'){
-         start++;
-    while(isdigit(inString[start])){
-        val = val*10 + (float)(inString[start]-'0');
-        start++;
-    }}
-    val = nextafterf(val/pow(10,dec),val+1);
-    ret.data = val;
-    ret.status = SUCCESS;
-    ret.subdata[0] = start;
-    return ret;
-}*/
 
-//!! DOES NOT CONVERT ** TO E
-//!! DO THAT IN PREPARSER
+//*converts infix expression which is in terms of v and operators
+//* into a postfix expression.
 Result convert(char in[]){
 
     int i =0,j=0,len=0;
@@ -130,6 +109,8 @@ Result convert(char in[]){
 
 }
 
+//*Evaluates a postfix expression expressed in v and operators 
+//*by using values enqued in loadVal of preparser
 Result eval(){
     int temp =0,i=0;
     char op;

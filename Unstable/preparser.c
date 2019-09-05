@@ -16,6 +16,7 @@ char infix[150],buf[150];
 int ASSIGN =0,DEFAULT = 0,EXISTING=0;
 char v_name[30];
 
+//*Removes spaces from the given equation
 void removeSpaces(char *p){
     int n =0;
     if(p == NULL){
@@ -29,6 +30,7 @@ void removeSpaces(char *p){
     p[n]='\0';
 }
 
+//*Checks if the given equation assigns value to any variable,default or otherwise;
 Result checkAssign(char *in){
 
     Result ret;
@@ -73,6 +75,8 @@ Result checkAssign(char *in){
     return ret;
 }
 
+//* this actually parses the values of Floating point +ve numbers that are in character string starting 
+//* pointed by inString, ending with '\0'
 Result parseVal(char inString[]){
     int dec =0;
     float val = 0.0;
@@ -94,8 +98,11 @@ Result parseVal(char inString[]){
     ret.status = SUCCESS;
     return ret;
 }
-
-Result subVal(char *in){
+//*Loads the general Queue with the values of constants > variables > Floating val priority
+//!! Cannot tokenize successfully with brackets thats why it  debrackets copy of equation in
+//!! preparse and then loads values
+//!! should do something for functions !!
+Result loadVal(char *in){
 
     Result ret,val;
     char *token = strtok(in,"+-/%*E");
@@ -160,7 +167,10 @@ int isop(char a){
     
     return a=='+' || a=='-' || a=='*' || a=='/' ||a=='%' || a=='E';
 }
-
+//* Adjusts the negations  :- replaces operator-val OR operator-const OR operator-var BY
+//*                                operator(0-val) OR operator(0-const) OR operator(0-var)
+//* eg. *-3 = *(0-3)
+//*Also relpaces negation inside brackets like : (-3) => (0-3)
 char *adjustNegetive(char *in){
 
     int i=0,j=0,l =0;
@@ -237,7 +247,7 @@ char *adjustNegetive(char *in){
     return buf;
 }
 
-
+//* Preparsing Functions
 Result preparse(char in[]){
 
     char pre,buf[150],temp[150];
@@ -247,7 +257,6 @@ Result preparse(char in[]){
     memset(temp,'\0',150);
     strcpy(temp,adjustNegetive(in));
     
-    //printf("buf-> %s",buf);
     while(i<strlen(temp)){
 
         if(isalnum(temp[i]) || temp[i] == '$'){
@@ -274,7 +283,7 @@ Result preparse(char in[]){
         }
     }
     
-    t1 = subVal(buf);
+    t1 = loadVal(buf);
     if(t1.status != SUCCESS){
         return t1;
     }else{
