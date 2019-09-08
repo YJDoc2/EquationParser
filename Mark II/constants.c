@@ -75,7 +75,7 @@ void initConst(){
     setConst("R",8.314463,"Universal Gas Const");
 }
 
-void displayConst(){
+void showConst(){
 
     Var *temp =const_start;
     printf("Defined Constants :\n");

@@ -16,6 +16,14 @@ char infix[150],buf[150];
 int ASSIGN =-1,DEFAULT = -1,EXISTING=-1;
 char v_name[30];
 
+void initPreparse(){
+    ASSIGN = -1;
+    DEFAULT = -1;
+    EXISTING = -1;
+    memset(infix,'\0',150);
+    memset(buf,'\0',150);
+}
+
 //*Removes spaces from the given equation
 void removeSpaces(char *p){
     int n =0;
@@ -45,6 +53,7 @@ Result checkAssign(char *in){
         strcpy(ret.error_info,"Cannot Perform Multiple Assignments");
         return ret;
     }
+    memset(temp,'\0',30*sizeof(char));
     strncpy(temp,in,start-in);
     if(strlen(temp)>=30){
         ret.status = ASSIGN_ERROR;
@@ -60,7 +69,7 @@ Result checkAssign(char *in){
             strcpy(ret.error_info,"Incorrect Default Variable Assignment");    
         }else{
             ret.status = SUCCESS;
-            DEFAULT = *(in+1);
+            DEFAULT = *(in+1)-'0';
         }
     }else{
         strcpy(v_name,temp);
@@ -92,7 +101,7 @@ Result loadVal(char *in, char *end){
 
     float data;
     Result ret,val;
-    char *token = strtok(in,"+-/%*E");
+    char *token = strtok(in,"+-/%*^");
     while(token != NULL && token < end){
         if(token == ""){
             continue;
@@ -140,7 +149,7 @@ Result loadVal(char *in, char *end){
             sprintf(ret.error_info,"Invalid Token %s",token);
             return ret;
         }
-        token = strtok(NULL,"+-/%*E");   
+        token = strtok(NULL,"+-/%*^");   
     }
     ret.status = SUCCESS;
     return ret;
@@ -153,7 +162,7 @@ Result loadVal(char *in, char *end){
 //* Should Adjusting for -ve value at start of string done in defferent method ---- YES!!!
 int isop(char a){
     
-    return a=='+' || a=='-' || a=='*' || a=='/' ||a=='%' || a=='E';
+    return a=='+' || a=='-' || a=='*' || a=='/' ||a=='%' || a=='^';
 }
 //* Adjusts the negations  :- replaces operator-val OR operator-const OR operator-var BY
 //*                                operator(0-val) OR operator(0-const) OR operator(0-var)
@@ -262,10 +271,10 @@ Result preparse(char *in ,char *end){
 
     }
     for(i=0,j=0;i<strlen(temp);i++){
-        if(temp[i] == '*' && temp[i+1] == '*' ){
+        /*if(temp[i] == '*' && temp[i+1] == '*' ){
             buf[j] = 'E';
             i++;j++;
-        }else if(temp[i] == '(' || temp[i] == ')'||temp[i] == '[' || temp[i] == ']'||temp[i] == '{' || temp[i] == '}'){
+        }else*/ if(temp[i] == '(' || temp[i] == ')'||temp[i] == '[' || temp[i] == ']'||temp[i] == '{' || temp[i] == '}'){
             continue;
         }else{
             buf[j] = temp[i];

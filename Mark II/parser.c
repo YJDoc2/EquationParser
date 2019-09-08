@@ -10,9 +10,9 @@
 #ifndef PARSER
 #define PARSER
 
+//printf("\nError in Parsing Expression %s at %d :: %s\n",inS,pos,ret.error_info);
 #define CHECK(ret,inS,pos)({\
             if(ret.status != SUCCESS){\
-                printf("\nError in Parsing Expression %s at %d :: %s\n",inS,pos,ret.error_info);\
                 return ret;\
             }\
         })
@@ -20,7 +20,7 @@
 char postfix[150];
 
 int priority(char c){
-    if(c == 'e' || c =='E'){
+    if(c == '^'){
         return 4;
     }else if(c =='*'||c=='/'||c == '%'){
         return 3;
@@ -49,10 +49,10 @@ Result convert(char in[],char *end){
     CHECK(temp,in,0);
     memset(buf,'\0',150);
     for(i=0,j=0;i<strlen(infix);i++){
-        if(infix[i] == '*' && infix[i+1] == '*' ){
+        /*if(infix[i] == '*' && infix[i+1] == '*' ){
             buf[j] = 'E';
             i++;j++;
-        }else{
+        }else*/{
             buf[j] = infix[i];
             j++;
         }
@@ -79,7 +79,7 @@ Result convert(char in[],char *end){
                 CHECK(temp,infix,i+1);
                 t = (char)temp.data;
             }
-        }else if(x == '+'||x == '-'||x == '*'||x == '/'||x == '%'||x == 'e'||x == 'E'){
+        }else if(x == '+'||x == '-'||x == '*'||x == '/'||x == '%'||x == '^'){
             if(opTop ==NULL||priority(x)>priority((char)peekOp().data)){
                 pushOp(x);
             }else{
@@ -140,7 +140,7 @@ Result eval(){
                 case '*':{push(op1*op2);break;}
                 case '/':{push(op1/op2);break;}
                 case '%':{push((int)op1%(int)op2);break;}
-                case 'E' : {push(pow(op1,op2));break;}
+                case '^' : {push(pow(op1,op2));break;}
             }
         }
         op = postfix[++i];
@@ -151,6 +151,52 @@ Result eval(){
     ret.data = r.data;
     return ret;
 
+
+}
+
+Result parse(char *in, char *end){
+    Result temp;
+    char c[10];
+    char *start = in;
+    initPreparse();
+    memset(postfix,'\0',150);
+    removeSpaces(in);
+    temp = checkAssign(in);
+    if(temp.status != SUCCESS){
+        return temp;
+    }
+    //! ERROR
+    if(ASSIGN != -1){
+        start = strchr(in,'=')+1;
+    }else{
+        start = in;
+    }
+    temp = convert(start,end);
+    if(temp.status != SUCCESS){
+        return temp;
+    }
+    temp = eval();
+    if(temp.status != SUCCESS){
+        return temp;
+    }
+    if(ASSIGN != -1){
+        if(DEFAULT != -1){
+            setDefVar(DEFAULT,temp.data);
+        }else{
+            if(EXISTING == -1){
+                setVar(v_name,temp.data);
+            }else{
+                printf("Re-Write Existing Variable...? Y/N > > > ");
+                fgets(c,10,stdin);
+                if(c[0] == 'n' || c[0] == 'N'){
+                    printf("Value Not Assigned...\n");
+                }else{
+                    setVar(v_name,temp.data);
+                }
+            }
+        }
+    }
+    return temp;
 
 }
 #endif
