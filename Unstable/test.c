@@ -2,8 +2,9 @@
 #include<string.h>
 #include<ctype.h>
 #include "./stacks.c"
+#include "./parser.c"
 
-char buf[50];
+/*char buf[50];
 int isop(char a){
     
     return a=='+' || a=='-' || a=='*' || a=='/' ||a=='%' || a=='E' || a =='(' || a=='[' || a== '{';
@@ -91,10 +92,15 @@ char *adjustNegetive(char *in){
 
     return buf;
 
-}
+}*/
 
 void main(){
-    char in[50];
-    scanf("%s",in);
-    printf("%s\n",adjustNegetive(in));
+    Result temp;
+    char in[] = "2**5+6";
+    char *end = in+6;
+    //scanf("%s",in);
+    temp = convert(in,end);
+    temp = eval();
+    end = strchr(in,'\0');
+    printf("R : %f\n",temp.data);
 }

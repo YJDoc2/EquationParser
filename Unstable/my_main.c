@@ -124,7 +124,7 @@ void main(){
                 fgets(in,50,stdin);
                 in[strlen(in)-1] = '\0';
                 removeSpaces(in);
-                ret = convert(in);
+                ret = convert(in,in+strlen(in));
                 if(ret.status == SUCCESS)ret = eval();
                 printf("Stat : %d ; Data : %0.5e ;Info : %s\n",ret.status,ret.data,ret.error_info);
                 break;

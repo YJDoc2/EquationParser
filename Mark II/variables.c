@@ -11,7 +11,7 @@ float default_var[10];
 Var *var_start,*var_end;
 
 
-Result setDefVal(int place,float val){
+Result setDefVar(int place,float val){
 
     Result ret;
 
@@ -27,7 +27,7 @@ Result setDefVal(int place,float val){
     return ret;
 }
 
-Result getDefVal(int place){
+Result getDefVar(int place){
 
     Result ret;
     float val = 0;
