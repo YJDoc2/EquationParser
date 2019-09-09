@@ -59,6 +59,22 @@ void display()
 		}
 	}
 }
+void flushQueue()								//To Empty the Queue
+{
+	if (front==NULL)
+	{
+		printf("Empty Queue\n");
+	}
+	else
+	{
+		while (front!=NULL)
+		{
+			temp=front;
+			front=front->next;
+			free(temp);
+		}
+	}
+}
 //For debugging
 void main()
 {
@@ -68,5 +84,7 @@ void main()
 	push(3);
 	push(4.5);
 	printf("pop=%f\n",pop() );
+	display();
+	flushQueue();
 	display();
 }
