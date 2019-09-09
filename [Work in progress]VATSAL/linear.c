@@ -26,7 +26,7 @@ int main()
 {
     int i,j,k,n,d,e,f;
     float A[20][20],c,X[10],sum=0.0,res=0.0,M[20][20];
-    printf("Enter co-efficients of variables and constant at last.\nStd.Equations:\na1x1 + b1x2 +c1x3+...=d1\na2x1 + b2x2 +c2x3+...=d2\n.\n.\n.\n.\nanx1 + bnx2 +cnx3+...=dn\n\nEnter th order of rows: ");
+    printf("Enter co-efficients of variables and constant at last Equation By Equation.\nStd.Equations:\na1x1 + b1x2 +c1x3+...=d1\na2x1 + b2x2 +c2x3+...=d2\n.\n.\n.\n.\nanx1 + bnx2 +cnx3+...=dn\n\nEnter th order of rows: ");
     scanf("%d",&n);
     printf("Enter the value of matrix: \n");
     for(i=1;i<=n;i++)
