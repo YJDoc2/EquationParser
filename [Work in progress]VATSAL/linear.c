@@ -14,6 +14,22 @@ int main()
             scanf("%f",&A[i][j]);
         }
     }
+    for(i = 1; i <= n; i++){
+        for(j = 1; j <= n; j++){
+            if(j>i){
+                ratio = A[j][i]/A[i][i];
+                for(k = 1; k <= n; k++){
+                    A[j][k] -= ratio * A[i][k];
+                }
+            }
+        }
+    }
+    det = 1; //storage for determinant
+    for(i = 1; i <=n; i++)
+        det *= A[i][i];
+    printf("The determinant of matrix is: %.2f\n\n", det);
+    if(det!=0)
+    {
     for(j=1;j<=n;j++)
     {
         for(i=1;i<=n;i++)
@@ -52,5 +68,8 @@ int main()
     {
         printf("\n%f\n",X[i]);
     }
+    }
+    else
+        printf("*****Infinite or No Solutions!****");
     return 0;
 }
