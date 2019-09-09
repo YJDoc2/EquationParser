@@ -1,5 +1,5 @@
 #include<stdio.h>
-int deter(int n,int A[20][20])
+int deter(int n,float A[20][20])
 {
     int i,j,k;
     float ratio,det=0.0;
