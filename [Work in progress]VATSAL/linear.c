@@ -1,3 +1,6 @@
+//A little Rectification needed.
+
+
 #include<stdio.h>
 int main()
 {
