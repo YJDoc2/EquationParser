@@ -1,7 +1,7 @@
 
 #include<stdio.h>
 
-float deter(int n,float M[20][20])//<<Function for Finding the Determinanat!>>
+/*float deter(int n,float M[20][20])//<<Function for Finding the Determinanat!>>
 {
     int i,j,k;
     float ratio,det=0.0;
@@ -20,7 +20,56 @@ float deter(int n,float M[20][20])//<<Function for Finding the Determinanat!>>
         det *= M[i][i];
     printf("The determinant of matrix is: %.2f\n\n", det);
     return det;
+}*/
+
+
+int determinant(float M[20][20],int x)
+{
+    int pr,d=0,j,p,q,t;
+    float c[20],b[20][20];
+    if(x==2)
+    {
+        d=(M[1][1]*M[2][2])-(M[1][2]*M[2][1]);
+        return d;
+    }
+    else
+    {
+        for(j=1;j<=x;j++)
+        {
+            int r=1,s=1;
+            for(p=1;p<=x;p++)
+            {
+                for(q=1;q<=x;q++)
+                {
+                    if(p!=1 && q!=j)
+                    {
+                        b[r][s]=M[p][q];
+                        s++;
+                        if(s>x-1)
+                        {
+                            r++;
+                            s=1;
+                        }
+                    }
+                }
+            }
+            for(t=1,pr=1;t<=1+j;t++)
+            {
+                pr=(-1)*pr;
+            }
+            c[j]=pr*determinant(b,x-1);
+        }
+        for(j=1,d=0;j<=x;j++)
+        {
+            d=d+(M[1][j]*c[j]);
+        }
+        return d;
+    }
 }
+
+
+
+
 int main()
 
 {
