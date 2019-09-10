@@ -107,7 +107,7 @@ int main()
     for(i = 1; i <=n; i++)
         det *= A[i][i];
     printf("The determinant of matrix is: %.2f\n\n", det);*/
-    res=deter(M,n);
+    res=determinant(M,n);
     if(res!=0)
     {//<<Elimination Starts>>For making upper triangular matrix
     for(j=1;j<=n;j++)
