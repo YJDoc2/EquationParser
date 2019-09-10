@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<stdlib.h>
-
 typedef struct LinkList //For Operators Stack
 {
 	float coef;
@@ -43,3 +42,23 @@ void display()
 		}
 	}
 }
+// Result flush()								
+// {
+// 	Result ret;
+// 	if (vfront==NULL)
+// 	{
+// 		ret.status = ERROR;
+// 		strcpy(ret.error_info,"Empty Queue");
+// 	}
+// 	else
+// 	{
+// 		while (vfront!=NULL)	
+// 		{
+// 			qTemp=vfront;
+// 			vfront=vfront->next;
+// 			free(qTemp);
+// 		}
+// 		ret.status=SUCCESS;
+// 	}
+// 	return ret;
+// }
