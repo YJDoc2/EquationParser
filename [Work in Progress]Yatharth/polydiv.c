@@ -15,7 +15,7 @@ float polyDiv()		//Returns Remainder , input is taken inside this.
 		b[i] = a[i] + r * b[i-1];							// b[i] is coef of x^(n-i) and same for a[i]
 	}
 	R = a[n] + r * b[n-1];								//Remainder
-	for (i=0;i<n;i++)
+	for (i=0;i<n;i++)									//Storing in LinkList
 	{
 		pushList(b[i]);
 	}
@@ -37,15 +37,16 @@ void getPoly()
 		printf("Enter Coeffecient of x^%d\n", n-i );
 		scanf("%f",&a[i]);
 	}
+}
+void displayQ(int n,float b[99])		//Pass the degree of eqn
+{
+	int i;
+	
 	for (i = 0; i <= n; i++)
 	{
 		printf("(%f x^%d) + ",a[i],n-i);		
 	}
 	printf("/ (x-%f) \n",r);
-}
-void displayQ(int n,float b[99])		//Pass the degree of eqn
-{
-	int i;
 	printf("The Quotient is:\n");
 	for (i = 0; i < n; ++i)
 	{
@@ -57,11 +58,11 @@ void displayQ(int n,float b[99])		//Pass the degree of eqn
 //========================================================================================================================
 //==========Note: Add this void main code to Mark II and delete it from here. Also #include "./polydiv.c"=================
 //========================================================================================================================
-void main()				
-{
-	getDivisor();
-	getPoly();
-	R=polyDiv();
-	displayQ(n,b);
-}
+// void main()				
+// {
+// 	getDivisor();
+// 	getPoly();
+// 	R=polyDiv();
+// 	displayQ(n,b);
+// }
 //========------Add the above part-----------==========
