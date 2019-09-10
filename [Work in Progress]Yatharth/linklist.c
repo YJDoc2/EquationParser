@@ -6,7 +6,7 @@ typedef struct LinkList //For Operators Stack
 	struct LinkList *next;
 }Quotient;
 Quotient *newnode,*front,*temp;
-void push(float v)
+void pushList(float v)
 {
 	Quotient *newnode =(Quotient *)malloc(sizeof(Quotient));
 	newnode->next=NULL;
@@ -26,7 +26,7 @@ void push(float v)
 		temp->next=newnode;
 	}
 }
-void display()
+void displayList()
 {
 	temp=front;
 	if (front==NULL)
@@ -42,21 +42,21 @@ void display()
 		}
 	}
 }
-// Result flush()								
+// Result flushList()								
 // {
 // 	Result ret;
-// 	if (vfront==NULL)
+// 	if (front==NULL)
 // 	{
 // 		ret.status = ERROR;
 // 		strcpy(ret.error_info,"Empty Queue");
 // 	}
 // 	else
 // 	{
-// 		while (vfront!=NULL)	
+// 		while (front!=NULL)	
 // 		{
-// 			qTemp=vfront;
-// 			vfront=vfront->next;
-// 			free(qTemp);
+// 			temp=front;
+// 			front=front->next;
+// 			free(temp);
 // 		}
 // 		ret.status=SUCCESS;
 // 	}

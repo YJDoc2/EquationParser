@@ -17,7 +17,7 @@ float polyDiv()		//Returns Remainder , input is taken inside this.
 	R = a[n] + r * b[n-1];								//Remainder
 	for (i=0;i<n;i++)
 	{
-		push(b[i]);
+		pushList(b[i]);
 	}
 	//display();
 	return R;
@@ -27,7 +27,7 @@ void getDivisor()
 	printf("Enter the value or r in (x-r) which is divisor\n");
   	scanf("%f",&r);
 }
-void getDivident()
+void getPoly()
 {
 	int i;
 	printf("Enter the degree of Polynomial Eqn: \n");
@@ -60,7 +60,7 @@ void displayQ(int n,float b[99])		//Pass the degree of eqn
 void main()				
 {
 	getDivisor();
-	getDivident();
+	getPoly();
 	R=polyDiv();
 	displayQ(n,b);
 }
