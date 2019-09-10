@@ -23,7 +23,7 @@
 }*/
 
 
-int determinant(float M[20][20],int x)
+int determinant(float M[20][20],int x)//<<Function for Finding the Determinanat!>>
 {
     int pr,d=0,j,p,q,t;
     float c[20],b[20][20];
