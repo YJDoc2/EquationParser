@@ -10,6 +10,7 @@ float root()
 	if (t<0)
 	{
 		printf("Error Roots Not Defined");
+		return -1;
 	}
 	else
 	{
@@ -31,6 +32,13 @@ void main()
 	int i,j;
 	getPoly();
 	r=root();
+	if (r == -1)
+	{
+		goto end;
+	}
+	{
+		/* code */
+	}
 	R=0;		// For Line 42 Initialization
 	S=1;		// For Line 42 Initialization
 	for (i = 0; i < n; i++)
@@ -57,4 +65,6 @@ void main()
 			printf("Root %d = %f \n",i+1,r);
 		}
 	}
+	end :
+	;
 }
