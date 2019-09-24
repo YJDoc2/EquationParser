@@ -3,21 +3,21 @@
 #include "./linklist.c"
 // #include "./queues.c"  Later i will try to implement queues instead of arrays
 float r,R;   			//r= const in (x-r)					R= Remainder1
-float a[100];
-float b[99];
+float crrPoly[100];
+float polyQtnt[99];
 int n;
 float polyDiv()		//Returns Remainder , input is taken inside this.
 {
 	int i;
-	b[0]=a[0];			//coef of x^n = coef of x^n-1 after division
+	polyQtnt[0]=crrPoly[0];			//coef of x^n = coef of x^n-1 after division
 	for (i = 1; i <= n; i++)
 	{
-		b[i] = a[i] + r * b[i-1];							// b[i] is coef of x^(n-i) and same for a[i]
+		polyQtnt[i] = crrPoly[i] + r * polyQtnt[i-1];							// polyQtnt[i] is coef of x^(n-i) and same for crrPoly[i]
 	}
-	R = a[n] + r * b[n-1];								//Remainder
+	R = crrPoly[n] + r * polyQtnt[n-1];								//Remainder
 	for (i=0;i<n;i++)									//Storing in LinkList
 	{
-		pushList(b[i]);
+		pushList(polyQtnt[i]);
 	}
 	//display();
 	return R;
@@ -35,22 +35,22 @@ void getPoly()
 	for (i = 0; i <= n; i++)
 	{
 		printf("Enter Coeffecient of x^%d\n", n-i );
-		scanf("%f",&a[i]);
+		scanf("%f",&crrPoly[i]);
 	}
 }
-void displayQ(int n,float b[99])		//Pass the degree of eqn
+void displayQ(int n,float polyQtnt[99])		//Pass the degree of eqn
 {
 	int i;
 	
 	for (i = 0; i <= n; i++)
 	{
-		printf("(%f x^%d) + ",a[i],n-i);		
+		printf("(%f x^%d) + ",crrPoly[i],n-i);		
 	}
 	printf("/ (x-%f) \n",r);
 	printf("The Quotient is:\n");
 	for (i = 0; i < n; ++i)
 	{
-		printf("(%f x^%d) +",b[i],n-i-1);
+		printf("(%f x^%d) +",polyQtnt[i],n-i-1);
 	}
 	printf("\n");
 	printf("Remainder is %f",R);

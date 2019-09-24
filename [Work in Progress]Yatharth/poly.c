@@ -6,7 +6,7 @@ float S;
 float root()
 {
 	float t;
-	t=(a[1]/a[0])*(a[1]/a[0])-2*(a[2]/a[0]);				//Upper Limit of Root
+	t=(crrPoly[1]/crrPoly[0])*(crrPoly[1]/crrPoly[0])-2*(crrPoly[2]/crrPoly[0]);				//Upper Limit of Root
 	if (t<0)
 	{
 		printf("Error Roots Not Defined");
@@ -24,20 +24,16 @@ void getSum()
 	S=0;
 	for (i=0;i<n;i++)
 	{
-		S=S+b[i];
+		S=S+polyQtnt[i];
 	}
 }
-void main()
+void evalPoly()
 {
 	int i,j;
-	getPoly();
 	r=root();
 	if (r == -1)
 	{
-		goto end;
-	}
-	{
-		/* code */
+		return;
 	}
 	R=0;		// For Line 42 Initialization
 	S=1;		// For Line 42 Initialization
@@ -55,16 +51,19 @@ void main()
 			while (R>0.001);				//Iterating the value of Root till Remainder is less than 0.001
 			for (j=0; j < n-i; j++)			//Storing Quotient Array in our next Divisor Array
 			{
-				a[j]=b[j];
+				crrPoly[j]=polyQtnt[j];
 			}
 			printf("Root %d = %f\n",i+1, r);
 		}
 		else							//When the equation is reduced to Linear Form
 		{
-			r = -a[1]/a[0];
+			r = -crrPoly[1]/crrPoly[0];
 			printf("Root %d = %f \n",i+1,r);
 		}
 	}
-	end :
-	;
+}
+void main()
+{
+	getPoly();
+	evalPoly();	
 }
