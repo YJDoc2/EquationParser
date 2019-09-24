@@ -5,14 +5,13 @@
 
 typedef enum
 {
-    SUCCESS,ERROR,VARIABLE_NOT_DEFINED,OUT_OF_BOUND,FILE_ERROR
+    SUCCESS,ERROR,ASSIGN_ERROR,VARIABLE_NOT_DEFINED,OUT_OF_BOUND,FILE_ERROR
 }resultStatus;
 
 
 typedef struct result
 {
     float data;
-    float subdata[5];
     resultStatus status;
     char error_info[100];
 }Result;

@@ -188,6 +188,20 @@ Result pop()
 	}
 	return ret;
 }
+
+gStack *getTop(){
+	return top;
+}
+
+gStack *setTop(gStack *t){
+	gStack *temp;
+	while(top!= NULL && top != t){
+		temp = top;
+		top = top->next;
+		free(temp);
+	}
+}
+
 /*void display()
 {
 	gTemp=top;

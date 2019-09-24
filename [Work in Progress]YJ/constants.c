@@ -69,13 +69,13 @@ void initConst(){
     setConst("Kb",1.380649e-23,"Boltzmann Constant");
     setConst("G",6.67430e-11,"Universal Gravitational Const");
     setConst("c",299792458,"Speed of Light");
-    setConst("e-",1.6021e-19,"elementary Charge of Electron");
+    setConst("Qe",1.6021e-19,"elementary Charge of Electron");
     setConst("eps0",8.8541878e-12,"Vaccum Permitivitty");
     setConst("mu0",1.256637e-6,"Vaccum Permeability");
     setConst("R",8.314463,"Universal Gas Const");
 }
 
-void displayConst(){
+void showConst(){
 
     Var *temp =const_start;
     printf("Defined Constants :\n");

@@ -154,6 +154,44 @@ Result eval(){
 
 }
 
+Result bracketCheck(char *in,char *end){
+    char temp;
+    int l = end-in;
+    int i, flag=1;
+    Result ret;
+    gStack *iniTop = getTop();
+    for(i = 0; i<l ;i++)
+    {
+        if(in[i]=='(' || in[i]=='[' || in[i]=='{')
+            push(in[i]);
+        if(in[i]==')' || in[i]==']' || in[i]=='}')
+            if(getTop() == NULL)
+                flag=0;
+            else
+            {
+                temp=(char)(pop()).data;
+                if(in[i]==')' && (temp=='[' || temp=='{'))
+                    flag=0;
+                if(in[i]=='}' && (temp=='(' || temp=='['))
+                    flag=0;
+                if(in[i]==']' && (temp=='(' || temp=='{'))
+                    flag=0;
+            }
+    }
+    if(getTop() != iniTop)
+        flag=0;
+    setTop(iniTop);
+    if(flag==1){
+        ret.status = SUCCESS;
+        return ret;
+    }else{
+        ret.status = ERROR;
+        sprintf(ret.error_info,"All Brackets Are not matched");
+        return ret;
+    }
+        
+}
+
 Result parse(char *in, char *end){
     Result temp;
     char c[10];
@@ -161,11 +199,16 @@ Result parse(char *in, char *end){
     initPreparse();
     memset(postfix,'\0',150);
     removeSpaces(in);
-    temp = checkAssign(in);
+    temp = bracketCheck(in,end);
     if(temp.status != SUCCESS){
+        flushQVal();
         return temp;
     }
-    //! ERROR
+    temp = checkAssign(in);
+    if(temp.status != SUCCESS){
+        flushQVal();
+        return temp;
+    }
     if(ASSIGN != -1){
         start = strchr(in,'=')+1;
     }else{
@@ -173,10 +216,13 @@ Result parse(char *in, char *end){
     }
     temp = convert(start,end);
     if(temp.status != SUCCESS){
+        flushQVal();
         return temp;
+        
     }
     temp = eval();
     if(temp.status != SUCCESS){
+        flushQVal();
         return temp;
     }
     if(ASSIGN != -1){

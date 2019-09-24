@@ -10,9 +10,9 @@
 #ifndef PARSER
 #define PARSER
 
+//printf("\nError in Parsing Expression %s at %d :: %s\n",inS,pos,ret.error_info);
 #define CHECK(ret,inS,pos)({\
             if(ret.status != SUCCESS){\
-                printf("\nError in Parsing Expression %s at %d :: %s\n",inS,pos,ret.error_info);\
                 return ret;\
             }\
         })
@@ -20,7 +20,7 @@
 char postfix[150];
 
 int priority(char c){
-    if(c == 'e' || c =='E'){
+    if(c == '^'){
         return 4;
     }else if(c =='*'||c=='/'||c == '%'){
         return 3;
@@ -31,61 +31,55 @@ int priority(char c){
     }
 }
 
-Result parseVal(char inString[],int start){
-    int dec =0;
-    float val = 0.0;
-    int count;
-    Result ret;
-    while(isdigit(inString[start])){
-        val = val*10 + (float)(inString[start]-'0');
-        start++;
-    }
-    if(inString[start] == '.'){
-         start++;
-    while(isdigit(inString[start])){
-        val = val*10 + (float)(inString[start]-'0');
-        start++;
-    }}
-    val = nextafterf(val/pow(10,dec),val+1);
-    ret.data = val;
-    ret.status = SUCCESS;
-    ret.subdata[0] = start;
-    return ret;
-}
 
-//!! DOES NOT CONVERT ** TO E
-//!! DO THAT IN PREPARSER
-Result convert(char in[]){
+//*converts infix expression which is in terms of v and operators
+//* into a postfix expression.
+Result convert(char in[],char *end){
 
     int i =0,j=0,len=0;
     float val =0.0;
     char x,t;
     Result temp;
-    preparse(in);
+    if(end<in){
+        temp.status = ERROR;
+        strcpy(temp.error_info,"End Pointer Greater Than Start");
+        return temp;
+    }
+    temp = preparse(in,end);
+    CHECK(temp,in,0);
+    memset(buf,'\0',150);
+    for(i=0,j=0;i<strlen(infix);i++){
+        /*if(infix[i] == '*' && infix[i+1] == '*' ){
+            buf[j] = 'E';
+            i++;j++;
+        }else*/{
+            buf[j] = infix[i];
+            j++;
+        }
+    }
+    strcpy(infix,buf);
     x = infix[0];
+    i =0;j=0;
     while(x!='\0'){
 
-        if(isdigit(x)){
-            temp = parseVal(infix,i);
-            i = temp.subdata[0]-1;
-            enQVar(temp.data);
-            postfix[j] = 'a';
-            j++;    
-        }else if(x =='('){
+        if(x =='v'){
+            postfix[j++] = x;
+        }else if(x =='(' || x =='[' ||x =='{'  ){
             pushOp(x);
-        }else if(x==')'){
+        }else if(x==')' || x ==']' || x =='}'){
             temp = popOp();
             CHECK(temp,infix,i+1);
             t=(char)temp.data;
             
-            while(t != '('){
+            while(t != '(' && t !='[' && t !='{'  ){
                
                 postfix[j] = t;
                 j++;
                 temp = popOp();
                 CHECK(temp,infix,i+1);
+                t = (char)temp.data;
             }
-        }else if(x == '+'||x == '-'||x == '*'||x == '/'||x == '%'||x == 'e'||x == 'E'){
+        }else if(x == '+'||x == '-'||x == '*'||x == '/'||x == '%'||x == '^'){
             if(opTop ==NULL||priority(x)>priority((char)peekOp().data)){
                 pushOp(x);
             }else{
@@ -114,9 +108,14 @@ Result convert(char in[]){
         t = (char)temp.data;
         postfix[j] = t;
         j++;
-    }
+     }
+    temp.status = SUCCESS;
+    return temp;
+
 }
 
+//*Evaluates a postfix expression expressed in v and operators 
+//*by using values enqued in loadVal of preparser
 Result eval(){
     int temp =0,i=0;
     char op;
@@ -124,11 +123,7 @@ Result eval(){
     op = postfix[i];
     Result r,ret;
     while( op != '\0'){
-        if(postfix[i] == 'a'){
-            r = deQVar();
-            CHECK(r,postfix,i+1); 
-            push(r.data);
-        }else if(postfix[i] == 'v'){
+        if(postfix[i] == 'v'){
             r = deQVal();
             CHECK(r,postfix,i+1); 
             push(r.data);
@@ -145,8 +140,7 @@ Result eval(){
                 case '*':{push(op1*op2);break;}
                 case '/':{push(op1/op2);break;}
                 case '%':{push((int)op1%(int)op2);break;}
-                case 'e':
-                case 'E' : {push(pow(op1,op2));break;}
+                case '^' : {push(pow(op1,op2));break;}
             }
         }
         op = postfix[++i];
@@ -160,5 +154,95 @@ Result eval(){
 
 }
 
+Result bracketCheck(char *in,char *end){
+    char temp;
+    int l = end-in;
+    int i, flag=1;
+    Result ret;
+    gStack *iniTop = getTop();
+    for(i = 0; i<l ;i++)
+    {
+        if(in[i]=='(' || in[i]=='[' || in[i]=='{')
+            push(in[i]);
+        if(in[i]==')' || in[i]==']' || in[i]=='}')
+            if(getTop() == NULL)
+                flag=0;
+            else
+            {
+                temp=(char)(pop()).data;
+                if(in[i]==')' && (temp=='[' || temp=='{'))
+                    flag=0;
+                if(in[i]=='}' && (temp=='(' || temp=='['))
+                    flag=0;
+                if(in[i]==']' && (temp=='(' || temp=='{'))
+                    flag=0;
+            }
+    }
+    if(getTop() != iniTop)
+        flag=0;
+    setTop(iniTop);
+    if(flag==1){
+        ret.status = SUCCESS;
+        return ret;
+    }else{
+        ret.status = ERROR;
+        sprintf(ret.error_info,"All Brackets Are not matched");
+        return ret;
+    }
+        
+}
 
+Result parse(char *in, char *end){
+    Result temp;
+    char c[10];
+    char *start = in;
+    initPreparse();
+    memset(postfix,'\0',150);
+    removeSpaces(in);
+    temp = bracketCheck(in,end);
+    if(temp.status != SUCCESS){
+        flushQVal();
+        return temp;
+    }
+    temp = checkAssign(in);
+    if(temp.status != SUCCESS){
+        flushQVal();
+        return temp;
+    }
+    if(ASSIGN != -1){
+        start = strchr(in,'=')+1;
+    }else{
+        start = in;
+    }
+    temp = convert(start,end);
+    if(temp.status != SUCCESS){
+        flushQVal();
+        return temp;
+        
+    }
+    temp = eval();
+    if(temp.status != SUCCESS){
+        flushQVal();
+        return temp;
+    }
+    if(ASSIGN != -1){
+        if(DEFAULT != -1){
+            setDefVar(DEFAULT,temp.data);
+        }else{
+            if(EXISTING == -1){
+                setVar(v_name,temp.data);
+            }else{
+                printf("Re-Write Existing Variable...? Y/N > > > ");
+                fgets(c,10,stdin);
+                if(c[0] == 'n' || c[0] == 'N'){
+                    printf("Value Not Assigned...\n");
+                }else{
+                    setVar(v_name,temp.data);
+                }
+            }
+        }
+    }
+    return temp;
+
+}
 #endif

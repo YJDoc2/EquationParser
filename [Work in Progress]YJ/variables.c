@@ -44,30 +44,6 @@ Result getDefVar(int place){
     return ret;
 }
 
-Result setVar(char *name,float val){
-
-    Result ret;
-    Var *temp;
-
-    temp = (Var *)malloc(sizeof(Var));
-    strcpy(temp->name,name);
-    temp->val = val;
-
-    if(var_start == NULL){ //For First Custom Variable
-        var_start = temp;
-        var_end = temp;
-
-    }else{
-        var_end->next = temp;
-        var_end = temp;
-    }
-    var_end->next = NULL;
-    ret.status = SUCCESS;
-    ret.data = val;
-    return ret;
-    
-}
-
 Result getVar(char *name){
 
     Var *temp = var_start;
@@ -95,6 +71,48 @@ Result getVar(char *name){
     }
 
     return ret;
+}
+
+Result setVar(char *name,float val){
+
+    Result ret;
+    Var *temp,*iter;
+
+    if(var_start == NULL){ //For First Custom Variable
+        temp = (Var *)malloc(sizeof(Var));
+        strcpy(temp->name,name);
+        temp->val = val;
+        var_start = temp;
+        var_end = temp;
+
+    }else{
+        ret = getVar(name);
+        if(ret.status == SUCCESS){
+            iter = var_start;
+            while(iter != NULL){
+                if(strcmp(iter->name,name) == 0){
+                    break;
+                }else{
+                    iter = iter->next;
+                }
+            }
+            iter->val = val;
+            ret.data = val;
+            return ret;
+        }else{
+            temp = (Var *)malloc(sizeof(Var));
+            strcpy(temp->name,name);
+            temp->val = val;
+            var_end->next = temp;
+            var_end = temp;
+        }
+        
+    }
+    var_end->next = NULL;
+    ret.status = SUCCESS;
+    ret.data = val;
+    return ret;
+    
 }
 
 Result clearVars(){
