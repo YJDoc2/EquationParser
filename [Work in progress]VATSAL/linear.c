@@ -1,5 +1,5 @@
-
 #include<stdio.h>
+#include<string.h>
 
 /*float deter(int n,float M[20][20])//<<Function for Finding the Determinanat!>>
 {
@@ -75,8 +75,9 @@ int main()
 {
     int i,j,k,n,d,e,f;
     float A[20][20],c,X[10],sum=0.0,res=0.0,M[20][20];
-    printf("Enter co-efficients of variables and constant at last Equation By Equation.\nStd.Equations:\na1x1 + b1x2 +c1x3+...=d1\na2x1 + b2x2 +c2x3+...=d2\n.\n.\n.\n.\nanx1 + bnx2 +cnx3+...=dn\n\nEnter th order of rows: ");
+    printf("Enter co-efficients of variables and constant at last Equation By Equation.\nStd.Equations:\na1x1 + b1x2 +c1x3+...=d1\na2x1 + b2x2 +c2x3+...=d2\n.\n.\n.\n.\nanx1 + bnx2 +cnx3+...=dn\n\nEnter the order of rows: ");
     scanf("%d",&n);
+    memset(A,0.0,sizeof(A[0][0])*n*n);//<---Initializing Array to 0--->// 
     printf("Enter the value of matrix: \n");
     for(i=1;i<=n;i++)
     {
@@ -116,10 +117,18 @@ int main()
         {
             if(i>j)
             {
-                c=A[i][j]/A[j][j];
-                for(k=1;k<=n+1;k++)
+                if(A[j][j] > -1E-36 && A[j][j] > 1E-36)//<---Check for 0 in Denominator--->
                 {
-                    A[i][k]=A[i][k]-(c*A[j][k]);
+                    c=A[i][j]/A[j][j];
+                    for(k=1;k<=n+1;k++)
+                    {
+                        A[i][k]=A[i][k]-(c*A[j][k]);
+                    }
+                }
+                else
+                {
+                    printf("***ERROR!***");
+                    return 0;
                 }
             }
         }
