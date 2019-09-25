@@ -1,14 +1,16 @@
+#include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
 #include "./typedef.c"
 #include "./preparser.c"
 #include "./parser.c"
-
+#include "./linear.c"
 
 
 #ifndef LINWRAP
 #define LINWRAP
 
+int currentEq=1;
 
 //* Gets the First occurence of character c, case-ignored in range in->end
 char *getCharPos(char *in, char *end,char c){
@@ -42,10 +44,16 @@ Result getCoeffNum(char *in){
 }
 
 void setConstTerm(float val){
-     printf("Constant Value %f\n",val);
+    int sign = val<0?-1:1;
+    //printf("Constant Value %f\n",val);
+    if(-1E-36<val && 1E-36>val){
+        val = sign*1E-37;
+    }
+    addConstTerm(currentEq,val);
 }
 void setCoeff(int pos,float val){
-    printf("Position : %d Value %f\n",pos,val);
+    //printf("Position : %d Value %f\n",pos,val);
+    addCoeff(currentEq,pos,val);
 }
 //!Will only work if given equation are in form f()x0+f()x1+....+f()x9+c with/wothout = c'
 //! Please use specified format to have accurate answers
@@ -89,6 +97,9 @@ Result parserLinear(char in[]){
         if(start == xpos || *start == '\0'){
             temp.status = SUCCESS;
             temp.data = 1;
+        }else if(*start=='-' && start+1 ==xpos){
+            temp.status = SUCCESS;
+            temp.data = -1;
         }else{
             temp = parse(start,xpos);
             CHECK(temp,in,xpos-in);
@@ -108,16 +119,52 @@ Result parserLinear(char in[]){
     }
 }
 
-void main(){
-    char in[50];
+Result linearSolve(){
+
+    char eq[175];
+    char null;
     Result ret;
+    initLinear();
+    printf("please Give The linear equations in following way for most accurate results :\n");
+    printf("Coeffx0 + Coeffx1 + ... + Coeffxn + Constant = Constant\n");
+    printf("Do not put multiplication sign * between Coefficient and variable, both constants are optional.\n");
+    printf("Give number of variables : ");
+    scanf("%d",&numVars);
+    printf("Please use variables x0 to x%d only\nDo not use inbuilt constants or defined Variables that contain X\n",numVars-1);
+    null = getchar();
+    fflush(stdin);
+    for(currentEq=1;currentEq<=numVars;currentEq++){
+        memset(eq,'\0',175);
+        printf(">>>>> ");
+        fgets(eq,170,stdin);
+        eq[strlen(eq)-1] = '\0';
+        if(strcmp(eq,"back")==0){
+            ret.status = SUCCESS;
+            return ret;
+        }
+        if(strlen(eq)>150){
+            printf("Please give Equation containing less Than 150 Character.\n");
+            currentEq--;
+            continue;
+        }else{
+            parserLinear(eq);
+        }
+    }
+    ret = solveLinear();
+    CHECK(ret,eq,0);
+    displayLinearSoln();
+    return ret;
+}
+
+void main(){
+    Result ret;
+   /* char in[50];
     printf(">>>>> ");
     fgets(in,50,stdin);
     in[strlen(in)-1] = '\0';
-    ret = parserLinear(in);
-
-    //! Error in laste variable, still have to implement no coeff = 1
-    printf("%s\n",ret.error_info);
+    ret = parserLinear(in);*/
+    ret = linearSolve();
+    if(ret.status!=SUCCESS)printf("%s\n",ret.error_info);
 }
 
 

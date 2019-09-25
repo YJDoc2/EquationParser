@@ -135,12 +135,45 @@ Result eval(){
             CHECK(r,postfix,i+1);
             op1 = r.data;
             switch(op){
-                case '+':{ push(op1+op2);break;}
-                case '-':{push(op1-op2);break;}
-                case '*':{push(op1*op2);break;}
-                case '/':{push(op1/op2);break;}
-                case '%':{push((int)op1%(int)op2);break;}
-                case '^' : {push(pow(op1,op2));break;}
+                case '+':{ 
+                    push(op1+op2);
+                    break;
+                    }
+                case '-':{
+                    push(op1-op2);
+                    break;
+                    }
+                case '*':{
+                    push(op1*op2);
+                    break;
+                    }
+                case '/':{
+                    if(-1E-36<op2 && op2<1E-36){
+                        ret.status = MATH_ERROR;
+                        sprintf(ret.error_info,"Cannot divide by Very small number,almost equal to zero");
+                        return ret;
+                    }
+                    push(op1/op2);
+                    break;
+                    }
+                case '%':{
+                    if((float)-1E-36<op2 && op2<(float)1E-36){
+                        ret.status = MATH_ERROR;
+                        sprintf(ret.error_info,"Cannot Take remainder by Very small number,almost equal to zero");
+                        return ret;
+                    }
+                    push(fmodf(op1,op2));
+                    break;
+                    }
+                case '^' : {
+                    if(op1<0){
+                        ret.status = MATH_ERROR;
+                        sprintf(ret.error_info,"Cannot Exponentiate Negetive number to a fraction power");
+                        return ret;
+                    }
+                    push(pow(op1,op2));
+                    break;
+                    }
             }
         }
         op = postfix[++i];
@@ -197,6 +230,12 @@ Result parse(char *in, char *end){
     char c[10];
     char *start = in;
     initPreparse();
+
+    temp = getVar("Ans");
+    if(temp.status == VARIABLE_NOT_DEFINED){
+        setVar("Ans",0.0);
+    }
+
     memset(postfix,'\0',150);
     removeSpaces(in);
     temp = bracketCheck(in,end);
@@ -225,6 +264,7 @@ Result parse(char *in, char *end){
         flushQVal();
         return temp;
     }
+    setVar("Ans",temp.data);
     if(ASSIGN != -1){
         if(DEFAULT != -1){
             setDefVar(DEFAULT,temp.data);
