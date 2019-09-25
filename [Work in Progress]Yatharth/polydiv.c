@@ -2,58 +2,59 @@
 #include<stdlib.h>
 #include "./linklist.c"
 // #include "./queues.c"  Later i will try to implement queues instead of arrays
-float r,R;   			//r= const in (x-r)					R= Remainder1
-float crrPoly[100];
-float polyQtnt[99];
-int n;
+float root1,Remainder;   			//root1= const in (x-r)
+float *crrPoly;
+float *polyQtnt;
+int degree;
 float polyDiv()		//Returns Remainder , input is taken inside this.
 {
 	int i;
 	polyQtnt[0]=crrPoly[0];			//coef of x^n = coef of x^n-1 after division
-	for (i = 1; i <= n; i++)
+	for (i = 1; i <= degree; i++)
 	{
-		polyQtnt[i] = crrPoly[i] + r * polyQtnt[i-1];							// polyQtnt[i] is coef of x^(n-i) and same for crrPoly[i]
+		polyQtnt[i] = crrPoly[i] + root1 * polyQtnt[i-1];							// polyQtnt[i] is coef of x^(n-i) and same for crrPoly[i]
 	}
-	R = crrPoly[n] + r * polyQtnt[n-1];								//Remainder
-	for (i=0;i<n;i++)									//Storing in LinkList
+	Remainder = crrPoly[degree] + root1 * polyQtnt[degree-1];								//Remainder
+	for (i=0;i<degree;i++)									//Storing in LinkList
 	{
 		pushList(polyQtnt[i]);
 	}
 	//display();
-	return R;
+	return Remainder;
 }
 void getDivisor()
 {
 	printf("Enter the value or r in (x-r) which is divisor\n");
-  	scanf("%f",&r);
+  	scanf("%f",&root1);
 }
 void getPoly()
 {
 	int i;
 	printf("Enter the degree of Polynomial Eqn: \n");
-	scanf("%d",&n);
-	for (i = 0; i <= n; i++)
+	scanf("%d",&degree);
+	crrPoly=(float *)malloc((degree+1)*sizeof(float));
+	polyQtnt=(float *)malloc(degree*sizeof(float));
+	for (i = 0; i <= degree; i++)
 	{
-		printf("Enter Coeffecient of x^%d\n", n-i );
+		printf("Enter Coeffecient of x^%d\n", degree-i );
 		scanf("%f",&crrPoly[i]);
 	}
 }
-void displayQ(int n,float polyQtnt[99])		//Pass the degree of eqn
+void displayQ(float polyQtnt[99])		//Pass the degree of eqn
 {
 	int i;
-	
-	for (i = 0; i <= n; i++)
+	for (i = 0; i <= degree; i++)
 	{
-		printf("(%f x^%d) + ",crrPoly[i],n-i);		
+		printf("(%f x^%d) + ",crrPoly[i],degree-i);		
 	}
-	printf("/ (x-%f) \n",r);
+	// printf("/ (x-%f) \n",root);
 	printf("The Quotient is:\n");
-	for (i = 0; i < n; ++i)
+	for (i = 0; i < degree; ++i)
 	{
-		printf("(%f x^%d) +",polyQtnt[i],n-i-1);
+		printf("(%f x^%d) +",polyQtnt[i],degree-i-1);
 	}
 	printf("\n");
-	printf("Remainder is %f",R);
+	printf("Remainder is %f",Remainder);
 }
 //========================================================================================================================
 //==========Note: Add this void main code to Mark II and delete it from here. Also #include "./polydiv.c"=================
@@ -62,7 +63,7 @@ void displayQ(int n,float polyQtnt[99])		//Pass the degree of eqn
 // {
 // 	getDivisor();
 // 	getPoly();
-// 	R=polyDiv();
-// 	displayQ(n,b);
+// 	Remainder=polyDiv();
+// 	displayQ(polyQtnt);
 // }
 //========------Add the above part-----------==========

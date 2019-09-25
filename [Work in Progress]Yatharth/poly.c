@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include<math.h>
 #include"./polydiv.c"
-float S;
+float tempSum;
 float root()
 {
 	float t;
@@ -21,44 +21,44 @@ float root()
 void getSum()
 {
 	int i;
-	S=0;
-	for (i=0;i<n;i++)
+	tempSum=0;
+	for (i=0;i<degree;i++)
 	{
-		S=S+polyQtnt[i];
+		tempSum=tempSum+polyQtnt[i];
 	}
 }
 void evalPoly()
 {
 	int i,j;
-	r=root();
-	if (r == -1)
+	root1=root();
+	if (root1 == -1)
 	{
 		return;
 	}
-	R=0;		// For Line 42 Initialization
-	S=1;		// For Line 42 Initialization
-	for (i = 0; i < n; i++)
+	Remainder=0;		// For Line 42 Initialization
+	tempSum=1;		// For Line 42 Initialization
+	for (i = 0; i < degree; i++)
 	{
-		if (n-i>1)	// For all cases except Last when the eqn will be linear
+		if (degree-i>1)	// For all cases except Last when the eqn will be linear
 		{
 			do
 			{
-				r=r-R/S;
-				R=polyDiv();
+				root1=root1-Remainder/tempSum;
+				Remainder=polyDiv();
 				getSum();
 				//printf("%f R=%f\n", r,R);
 			}
-			while (R>0.001);				//Iterating the value of Root till Remainder is less than 0.001
-			for (j=0; j < n-i; j++)			//Storing Quotient Array in our next Divisor Array
+			while (Remainder>0.001);				//Iterating the value of Root till Remainder is less than 0.001
+			for (j=0; j < degree-i; j++)			//Storing Quotient Array in our next Divisor Array
 			{
 				crrPoly[j]=polyQtnt[j];
 			}
-			printf("Root %d = %f\n",i+1, r);
+			pushRoot(root1);
 		}
 		else							//When the equation is reduced to Linear Form
 		{
-			r = -crrPoly[1]/crrPoly[0];
-			printf("Root %d = %f \n",i+1,r);
+			root1 = -crrPoly[1]/crrPoly[0];
+			pushRoot(root1);
 		}
 	}
 }
@@ -66,4 +66,5 @@ void main()
 {
 	getPoly();
 	evalPoly();	
+	displayRoot();		//This will display the root
 }
