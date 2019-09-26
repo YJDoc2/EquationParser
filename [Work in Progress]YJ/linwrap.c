@@ -4,6 +4,7 @@
 #include "./typedef.c"
 #include "./preparser.c"
 #include "./parser.c"
+#include "./util.c"
 #include "./linear.c"
 
 
@@ -11,23 +12,6 @@
 #define LINWRAP
 
 int currentEq=1;
-
-//* Gets the First occurence of character c, case-ignored in range in->end
-char *getCharPos(char *in, char *end,char c){
-    char *t = in;
-
-    if(end<in){
-        return NULL;
-    }
-    while(t<=end){
-        if(tolower(*t) == tolower(c)){
-            return t;
-        }else{
-            t = t+1;
-        }
-    }
-    return NULL;
-}
 
 Result getCoeffNum(char *in){
     Result ret;
@@ -43,17 +27,17 @@ Result getCoeffNum(char *in){
 
 }
 
-void setConstTerm(float val){
+void setLinConstTerm(float val){
     int sign = val<0?-1:1;
     //printf("Constant Value %f\n",val);
     if(-1E-36<val && 1E-36>val){
         val = sign*1E-37;
     }
-    addConstTerm(currentEq,val);
+    addLinConstTerm(currentEq,val);
 }
-void setCoeff(int pos,float val){
+void setLinCoeff(int pos,float val){
     //printf("Position : %d Value %f\n",pos,val);
-    addCoeff(currentEq,pos,val);
+    addLinCoeff(currentEq,pos,val);
 }
 //!Will only work if given equation are in form f()x0+f()x1+....+f()x9+c with/wothout = c'
 //! Please use specified format to have accurate answers
@@ -65,6 +49,8 @@ Result parserLinear(char in[]){
     int varnum;
     Result temp;
     removeSpaces(in);
+    temp = bracketCheck(in,in+strlen(in));
+    CHECK(temp,in,1);
     if(strchr(in,'=') != strrchr(in,'=')){
         temp.status = ERROR;
         sprintf(temp.error_info,"Cannot Have multiple assignment Signs in An Equation");
@@ -72,7 +58,7 @@ Result parserLinear(char in[]){
     }
     eq = strchr(in,'=');
     if(eq == NULL){
-        setConstTerm(0);
+        setLinConstTerm(0);
         strncpy(eqn,in,strlen(in)+1);
         end = eqn+strlen(eqn)-1; //!check for error in running
     }else{
@@ -81,7 +67,7 @@ Result parserLinear(char in[]){
         CHECK(temp,in,eq+1);
         strncpy(eqn,in,eq-in);
         eqn[strlen(eqn)] ='\0';
-        setConstTerm(temp.data);
+        setLinConstTerm(temp.data);
     }
     start = eqn;
     xpos = getCharPos(eqn,end,'x');
@@ -104,7 +90,7 @@ Result parserLinear(char in[]){
             temp = parse(start,xpos);
             CHECK(temp,in,xpos-in);
         }
-        setCoeff(varnum,temp.data);
+        setLinCoeff(varnum,temp.data);
         if(*(xpos+2) == '+'){
             start = xpos+3;
         }else{
@@ -115,8 +101,10 @@ Result parserLinear(char in[]){
     if(start != eqn+strlen(eqn)){
         temp = parse(start,eqn+strlen(eqn));
         CHECK(temp,in,xpos-in);
-        setConstTerm(temp.data);
+        setLinConstTerm(-temp.data); // Constant term should be on right of equal sign
     }
+    temp.status = SUCCESS;
+    return temp;
 }
 
 Result linearSolve(){

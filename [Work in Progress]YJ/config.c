@@ -6,6 +6,7 @@
 #define CONFIG
 
 char varlogFile[50] = "vardump.log";
+float ROOTERR = 1E-7;
 
 void setConfig(){
 

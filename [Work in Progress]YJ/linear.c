@@ -52,12 +52,12 @@ float determinant(float M[14][14],int x){//<<Function for Finding the Determinan
     }
 }
 
-void addCoeff(int eqnum,int varnum,float val){
+void addLinCoeff(int eqnum,int varnum,float val){
     augmentedM[eqnum][varnum+1] += val;
     //printf("eq %d, var %d val %0.2e\n",eqnum,varnum+1,val);
 }
 
-void addConstTerm(int eqnum,float val){
+void addLinConstTerm(int eqnum,float val){
     augmentedM[eqnum][numVars+1] += val;
     //printf("eq %d, constant val %0.2e\n",eqnum,val);
 }
