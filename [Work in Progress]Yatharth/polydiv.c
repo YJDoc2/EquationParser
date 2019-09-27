@@ -5,8 +5,8 @@
 float root1,Remainder;   			//root1= const in (x-r)
 float *crrPoly;
 float *polyQtnt;
-int degree;
-float polyDiv()		//Returns Remainder , input is taken inside this.
+//int degree;
+float polyDiv(int degree)		//Returns Remainder , input is taken inside this.
 {
 	int i;
 	polyQtnt[0]=crrPoly[0];			//coef of x^n = coef of x^n-1 after division
@@ -27,9 +27,9 @@ void getDivisor()
 	printf("Enter the value or r in (x-r) which is divisor\n");
   	scanf("%f",&root1);
 }
-void getPoly()
+int getPoly()
 {
-	int i;
+	int i,degree;
 	printf("Enter the degree of Polynomial Eqn: \n");
 	scanf("%d",&degree);
 	crrPoly=(float *)malloc((degree+1)*sizeof(float));
@@ -39,8 +39,9 @@ void getPoly()
 		printf("Enter Coeffecient of x^%d\n", degree-i );
 		scanf("%f",&crrPoly[i]);
 	}
+	return degree;
 }
-void displayQ(float polyQtnt[99])		//Pass the degree of eqn
+void displayQ(float polyQtnt[99],int degree)		//Pass the degree of eqn
 {
 	int i;
 	for (i = 0; i <= degree; i++)
@@ -62,9 +63,10 @@ void displayQ(float polyQtnt[99])		//Pass the degree of eqn
 //========================================================================================================================
 // void main()				
 // {
+//	int degree;
 // 	getDivisor();
-// 	getPoly();
-// 	Remainder=polyDiv();
-// 	displayQ(polyQtnt);
+// 	degree=getPoly();
+// 	Remainder=polyDiv(degree);
+// 	displayQ(polyQtnt,degree);
 // }
 //========------Add the above part-----------==========

@@ -25,7 +25,7 @@ float absolute(float x)
 	else
 		return x;
 }
-void getSum(int iteration)
+void getSum(int iteration,int degree)
 {
 	int i;
 	tempSum=0;
@@ -34,7 +34,7 @@ void getSum(int iteration)
 		tempSum=root1*tempSum+polyQtnt[i];
 	}
 }
-void evalPoly()
+void evalPoly(int degree)
 {
 	int i,j;
 	float tempRoot;
@@ -50,19 +50,15 @@ void evalPoly()
 			}
 			do
 			{
-				Remainder=polyDiv();
-				getSum(i);
+				Remainder=polyDiv(degree-i);
+				getSum(i,degree-i);
 				tempRoot=root1;
 				root1=tempRoot-Remainder/tempSum;
-				//printf("tempRoot= %f root=%f remainder=%f tempSum=%f \n",tempRoot, root1, Remainder , tempSum);
-				//printf("%f R=%f\n", r,R);
 			}
 			while (absolute(Remainder)>=0.001);				//Iterating the value of Root till Remainder is less than 0.001
-			printf("Remainder= %f \n", Remainder);
 			for (j=0; j < degree-i; j++)			//Storing Quotient Array in our next Divisor Array
 			{
 				crrPoly[j]=polyQtnt[j];
-				printf("%f x^ %d + ",crrPoly[j],degree-j-1);
 			}
 			printf("\n");
 			pushRoot(root1);
@@ -76,7 +72,8 @@ void evalPoly()
 }
 void main()
 {
-	getPoly();
-	evalPoly();	
+	int degree;
+	degree=getPoly();
+	evalPoly(degree);	
 	displayRoot();		//This will display the root
 }
