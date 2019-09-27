@@ -47,6 +47,7 @@ void displayQ(float polyQtnt[99])		//Pass the degree of eqn
 	{
 		printf("(%f x^%d) + ",crrPoly[i],degree-i);		
 	}
+	printf(" / (x - %f) \n",root1);
 	// printf("/ (x-%f) \n",root);
 	printf("The Quotient is:\n");
 	for (i = 0; i < degree; ++i)

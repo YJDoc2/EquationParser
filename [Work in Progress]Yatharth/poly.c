@@ -18,41 +18,53 @@ float root()
 	}
 	return t;
 }
-void getSum()
+float absolute(float x)
+{
+	if ( x < 0)
+		return -x;
+	else
+		return x;
+}
+void getSum(int iteration)
 {
 	int i;
 	tempSum=0;
-	for (i=0;i<degree;i++)
+	for (i=0;i<=degree-iteration-1;i++)
 	{
-		tempSum=tempSum+polyQtnt[i];
+		tempSum=root1*tempSum+polyQtnt[i];
 	}
 }
 void evalPoly()
 {
 	int i,j;
-	root1=root();
-	if (root1 == -1)
-	{
-		return;
-	}
-	Remainder=0;		// For Line 42 Initialization
-	tempSum=1;		// For Line 42 Initialization
+	float tempRoot;
 	for (i = 0; i < degree; i++)
 	{
+		
 		if (degree-i>1)	// For all cases except Last when the eqn will be linear
 		{
+			root1=root();
+			if (root1 == -1)
+			{
+				return;
+			}
 			do
 			{
-				root1=root1-Remainder/tempSum;
 				Remainder=polyDiv();
-				getSum();
+				getSum(i);
+				tempRoot=root1;
+				root1=tempRoot-Remainder/tempSum;
+				//printf("tempRoot= %f root=%f remainder=%f tempSum=%f \n",tempRoot, root1, Remainder , tempSum);
 				//printf("%f R=%f\n", r,R);
 			}
-			while (Remainder>0.001);				//Iterating the value of Root till Remainder is less than 0.001
+			while (absolute(Remainder)>=0.001);				//Iterating the value of Root till Remainder is less than 0.001
+			printf("Remainder= %f \n", Remainder);
 			for (j=0; j < degree-i; j++)			//Storing Quotient Array in our next Divisor Array
 			{
 				crrPoly[j]=polyQtnt[j];
+				printf("%f x^ %d + ",crrPoly[j],degree-j-1);
 			}
+			printf("\n");
 			pushRoot(root1);
 		}
 		else							//When the equation is reduced to Linear Form
