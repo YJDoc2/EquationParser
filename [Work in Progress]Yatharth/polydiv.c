@@ -63,7 +63,7 @@ void displayQ(float polyQtnt[99],int degree)		//Pass the degree of eqn
 //========================================================================================================================
 // void main()				
 // {
-//	int degree;
+// 	int degree;
 // 	getDivisor();
 // 	degree=getPoly();
 // 	Remainder=polyDiv(degree);

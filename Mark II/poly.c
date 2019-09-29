@@ -39,11 +39,11 @@ float absolute(float x) //default c abs from math only operates on ints
 	else
 		return x;
 }
-void getSum(int iteration,int degree)
+void getSum(int degree)
 {
 	int i;
 	tempSum=0;
-	for (i=0;i<=degree-iteration-1;i++)
+	for (i=0;i<=degree-1;i++)
 	{
 		tempSum=root1*tempSum+polyQtnt[i];
 	}
@@ -75,7 +75,7 @@ void evalPoly(int degree)
 			do
 			{
 				Remainder=polyDiv(degree-i);
-				getSum(i,degree-i);
+				getSum(degree-i);
 				tempRoot=root1;
 				root1=tempRoot-Remainder/tempSum;
 			}
@@ -94,10 +94,10 @@ void evalPoly(int degree)
 	}
 }
 #endif
-/* void main()
-{
-	int degree;
-	degree=getPoly();
-	evalPoly(degree);	
-	displayRoot();		//This will display the root
-} */
+//  void main()
+// {
+// 	int degree;
+// 	degree=getPoly();
+// 	evalPoly(degree);	
+// 	displayRoot();		//This will display the root
+// } 
