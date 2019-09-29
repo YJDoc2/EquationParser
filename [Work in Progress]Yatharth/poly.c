@@ -9,7 +9,7 @@ float root()
 	t=(crrPoly[1]/crrPoly[0])*(crrPoly[1]/crrPoly[0])-2*(crrPoly[2]/crrPoly[0]);				//Upper Limit of Root
 	if (t<0)
 	{
-		printf("Error Root(s) Not Defined \n");
+		printf("Root(s) Not Defined \n");
 		return -1;
 	}
 	else
