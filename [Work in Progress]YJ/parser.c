@@ -18,6 +18,7 @@
         })
 
 char postfix[150];
+int linear= 0,poly =0;
 
 int priority(char c){
     if(c == '^'){
@@ -264,7 +265,7 @@ Result parse(char *in, char *end){
         flushQVal();
         return temp;
     }
-    setVar("Ans",temp.data);
+    if(!linear && !poly){setVar("Ans",temp.data);}
     if(ASSIGN != -1){
         if(DEFAULT != -1){
             setDefVar(DEFAULT,temp.data);

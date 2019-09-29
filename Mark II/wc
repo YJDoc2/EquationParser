@@ -1,0 +1,21 @@
+total 104
+-rw-r--r-- 1 yashodhan yashodhan  480 Sep 29 15:40 config.c
+-rw-r--r-- 1 yashodhan yashodhan 2311 Sep 10 21:03 constants.c
+-rw-r--r-- 1 yashodhan yashodhan 7028 Sep 29 16:40 help.c
+-rw-r--r-- 1 yashodhan yashodhan 1449 Sep 29 15:39 inbuilt.c
+-rw-r--r-- 1 yashodhan yashodhan 5901 Sep 29 15:40 linear.c
+-rw-r--r-- 1 yashodhan yashodhan 2186 Sep 29 15:40 linkedlist.c
+-rw-r--r-- 1 yashodhan yashodhan 4573 Sep 29 15:40 linwrap.c
+-rw-r--r-- 1 yashodhan yashodhan 4260 Sep 29 16:16 main.c
+-rw-r--r-- 1 yashodhan yashodhan 7309 Sep 29 15:36 parser.c
+-rw-r--r-- 1 yashodhan yashodhan 2044 Sep 29 15:40 poly.c
+-rw-r--r-- 1 yashodhan yashodhan 2604 Sep 29 15:40 polydiv.c
+-rw-r--r-- 1 yashodhan yashodhan 4283 Sep 29 15:40 polywrap.c
+-rw-r--r-- 1 yashodhan yashodhan 8212 Sep  8 17:03 preparser.c
+-rw-r--r-- 1 yashodhan yashodhan 1115 Sep 29 15:37 queues.c
+-rw-r--r-- 1 yashodhan yashodhan 3887 Sep 17 15:48 stacks.c
+-rw-r--r-- 1 yashodhan yashodhan  395 Sep 29 15:34 typedef.c
+-rw-r--r-- 1 yashodhan yashodhan  389 Sep 29 15:40 util.c
+-rw-r--r-- 1 yashodhan yashodhan 3327 Sep  8 15:47 variables.c
+-rw-r--r-- 1 yashodhan yashodhan    0 Sep 29 16:42 wc
+ls -l

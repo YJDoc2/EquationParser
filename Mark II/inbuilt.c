@@ -24,6 +24,9 @@ Result vardump(){
             fprintf(file,"%lf ",default_var[c]); //! Mind the space after %lf, thus must be a space in fscanf
         }
         while(temp !=NULL){
+            if(strcmp(temp->name,"Ans")==0){
+                continue;
+            }
             fprintf(file,"%s : %lf\n",temp->name,temp->val);
             temp = temp->next;
         }
@@ -47,10 +50,10 @@ Result varload(){
         sprintf(ret.error_info,"Error in reading vardump file : %s",strerror(errno));
     }else{
         for(;c<10;c++){
-            fscanf(file,"%lf ",&default_var[c]);
+            fscanf(file,"%f ",&default_var[c]);
         }
         while(!feof(file)){
-            fscanf(file,"%s : %lf\n",name,&val);
+            fscanf(file,"%s : %f\n",name,&val);
             setVar(name,val);
         }
         ret.status = SUCCESS;

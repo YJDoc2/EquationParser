@@ -13,8 +13,7 @@ typedef struct varQueue
 	float var;
 	struct varQueue *next;
 }gQueue;
-gQueue *vfront,*vrear,*qTemp;
-gQueue *cfront,*crear;
+gQueue *cfront,*crear,*qTemp;
 
 void enQVal(float variable)
 {
@@ -72,4 +71,6 @@ Result flushQVal()								//To Empty the Queue
 	}
 	return ret;
 }
+
+
 #endif
