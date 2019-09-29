@@ -24,7 +24,7 @@ void main()
     printf(">>>>>>Polynomial Equation: \n\n");
     printf("----->User will enter the degree of Polynomial first\n");
     printf("----->Then You will be asked to select the input type:\n");
-    printf("       \t i) In the form of ax^n+bx^n-1+......dx^1+cx^0\n \t ii) In the form of a mixed equation\n");
+    printf("       \t i)  In the form of ax^n+bx^n-1+......dx^1+cx^0\n \t ii) In the form of a mixed equation\n");
     printf("----->Now the program will use Newton-Raphson and Repeated Polynomial Division to find roots of your equation\n");
     printf("----->The roots will be displayed. If 1 or more roots are imaginary, it will display \'Root(s) Not Defined\'\n");
     printf("-----------------------------------------------------------------------------------------------------------------------\n\n");
