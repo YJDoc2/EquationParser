@@ -136,22 +136,7 @@ Result popP()
 	}
 	return ret;
 }
-void pisplayP()
-{
-	tempP=pTop;
-	if (pTop==NULL)
-	{
-		printf("pTop is unassigned or the list is empty \n");
-	}
-	else
-	{
-		while (tempP!=NULL)
-		{
-			printf("%f \n",tempP->var);			//Display the variables from top -> bottom
-			tempP=tempP->next;
-		}
-	}
-}
+
 //================================Functions of General Stack========================================
 void push(float variable)
 {
@@ -202,21 +187,4 @@ gStack *setTop(gStack *t){
 	}
 }
 
-/*void display()
-{
-	gTemp=top;
-	if (top==NULL)
-	{
-		printf("top is unassigned or the list is empty \n");
-	}
-	else
-	{
-		while (gTemp!=NULL)
-		{
-			printf("%f \n",gTemp->var);			//Display the variables from top -> bottom
-			gTemp=gTemp->next;
-		}
-	}
-}
-*/
 #endif

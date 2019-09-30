@@ -162,7 +162,11 @@ void main(){
             if(r.status != SUCCESS){
                 printf("Error Occured...%s\n",r.error_info);
             }else{
-                printf("%0.5e\n",r.data);
+                if(absolute(r.data)<1E-3 || absolute(r.data)>1E3){
+                    printf("%0.5e\n",r.data);
+                }else{
+                    printf("%f\n",r.data);
+                }
             }
             
         }

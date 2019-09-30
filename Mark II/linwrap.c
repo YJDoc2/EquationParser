@@ -151,16 +151,6 @@ Result linearSolve(){
     return ret;
 }
 
-/*void main(){
-    Result ret;
-   /* char in[50];
-    printf(">>>>> ");
-    fgets(in,50,stdin);
-    in[strlen(in)-1] = '\0';
-    ret = parserLinear(in);
-    ret = linearSolve();
-    if(ret.status!=SUCCESS)printf("%s\n",ret.error_info);
-}*/
 
 
 #endif

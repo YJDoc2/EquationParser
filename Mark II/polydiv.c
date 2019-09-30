@@ -92,15 +92,3 @@ void displayQ(float polyQtnt[99],int degree)		//Pass the degree of eqn
 	getchar();
 }
 #endif
-//========================================================================================================================
-//==========Note: Add this void main code to Mark II and delete it from here. Also #include "./polydiv.c"=================
-//========================================================================================================================
-// void main()				
-// {
-//	int degree;
-// 	getDivisor();
-// 	degree=getPoly();
-// 	Remainder=polyDiv(degree);
-// 	displayQ(polyQtnt,degree);
-// }
-//========------Add the above part-----------==========

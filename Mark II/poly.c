@@ -94,10 +94,3 @@ void evalPoly(int degree)
 	}
 }
 #endif
-//  void main()
-// {
-// 	int degree;
-// 	degree=getPoly();
-// 	evalPoly(degree);	
-// 	displayRoot();		//This will display the root
-// } 
