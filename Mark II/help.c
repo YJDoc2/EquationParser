@@ -42,13 +42,14 @@ void showHelp()
     printf("----->If determinant is zero 0 then linear system of equations is not consistent, therefore solutions will not exits or will have infinite no. of solutions.\n");
     printf("----->If determinant is not zero then linear system of equations is consistent and equations can have unique solution.\n");
     printf("----->Method used for solving the linear equations is Gauss-Elimination Method.\n");
+    printf("\n----->Type quit to return back to General Parser\n");
     printf("-----------------------------------------------------------------------------------------------------------------------\n\n");
     printf(">>>>>>PLOYNOMIAL EQUATION SOLVING: \n\n");
     printf("----->Use polysolve in general parser to use this.\nThis has three modes - Equation parsing,Coefficient Read and Linear Division.\n\n");
     printf("Enter coeff to Use Coefficient read:\n");
     printf("----->Enter the degree of Polynomial first\n");
     printf("Standerd form of a1x^n+a2x^n-1+......anx^1+constant.\n\n");
-    printf("Use solve to parse equation and find its roots.\n");
+    printf("Enter the equation with powers of x or X to parse equation and find its roots.\n");
     printf("----->Now the program will use Newton-Raphson and Repeated Polynomial Division to find roots of your equation\n");
     printf("----->The All Real Roots will be displayed, upto accuracy of approximately 0.0001.\n\n");
     printf("Use div Divide a polynomial by a linear factor.\n");
@@ -57,7 +58,11 @@ void showHelp()
     printf("----->Then User will be asked to input the degree of Polynomial\n");
     printf("----->Finally, User will have to input the equation in a similar fashion as in Polynomial Equation\n");
     printf("----->The output will be displayed on the screen\n");
-    printf("\nThank You for using Equation Parser.\n");
+    printf("\n----->Type quit to return back to General Parser\n");
+    printf("-----------------------------------------------------------------------------------------------------------------------\n\n");
+    printf("----->Type quit to close Equation Parser\n\n");
+    printf("\n\t\t\t\t\tThank You for using Equation Parser.\n\n");
+
 
 	 printf("__   __                                        ______           _                                        __   __ \n");
 	 printf("\\ \\ / /                                       |  ____|         | |                                       \\ \\ / / \n");
