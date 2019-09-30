@@ -51,9 +51,13 @@ int checkAndEvalInternalFn(char in[]){
 void polyInterface(){
     Result ret;
     char in[50];
+    printf("\nType 'help' to read help page,'back' or 'q' to go back to general parser\n");
+    printf("Type 'coeff' to give equaiton by coefficients.\n");
+    printf("Type 'div' to use division by linear factor.");
+    printf("Type equation to parse it and find roots.\n\n");
     printf("Do not use Variables including 'x' or 'X' \n");
     printf("Roots will be Accurate upto 0.0001\n");
-    printf("Use coeff for giving polynomial corfficients,use div for polynomial division by a linear factor\n");
+    printf("Use coeff for giving polynomial corfficients,use div for polynomial division by a linear factor\n\n");
     while(1){
         printf("poly> ");
         fgets(in,50,stdin);
@@ -99,9 +103,11 @@ void polyInterface(){
 void linInterface(){
     Result ret;
     char in[50];
-    printf("use coeff to give linear equations by coeffitients.\n");
+    printf("\nType 'help' to read help page,'back' or 'q' to go back to general parser.\n");
+    printf("Type 'solve' to parse linear equation and solve them.");
+    printf("use 'coeff' to give linear equations by coeffitients.\n\n");
     printf("Do not use Variables including 'x' or 'X' \n");
-    printf("Solutions will be Accurate upto 0.0001\n");
+    printf("Solutions will be Accurate upto 0.0001\n\n");
     while(1){
         printf("lin>> ");
         fgets(in,50,stdin);
@@ -116,7 +122,7 @@ void linInterface(){
         }else if(strcmp(in,"solve\n")==0){
            linearSolve();
         }else{
-            printf("Please Enter Coeff to Read coeff or solve to parse Equation. Use back or q to Return to Genearl Parser\n");
+            printf("lease Enter 'Coeff' to Read coeff or 'solve' to parse Equation.\nUse 'back' or 'q' to Return to Genearl Parser\n\n");
         }
     }
 }
@@ -127,8 +133,11 @@ void main(){
     Result r;
     r.status = ERROR;
     in[0] = '\0';
-    printf("-----General Equation Parser-----\n\n");
+    printf("\n\n-----General Equation Parser-----\n\n");
+    printf("Type 'back' or 'q' or 'Q' to Exit.\n");
     printf("Type 'help' to read help page.\n");
+    printf("Type 'linsolve' to use linear equation solver.\n");
+    printf("Type 'polysolve' to use polynomial solver.\n\n");
     initConst();
     while(1){
         printf(">>>>> ");

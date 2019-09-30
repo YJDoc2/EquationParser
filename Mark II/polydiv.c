@@ -68,18 +68,28 @@ void displayQ(float polyQtnt[99],int degree)		//Pass the degree of eqn
 {
 	int i;
 	for (i = 0; i <= degree; i++)
-	{
-		printf("(%f x^%d) + ",crrPoly[i],degree-i);		
+	{	
+		if(i <degree-1){
+			printf("(%f x^%d) + ",crrPoly[i],degree-i);		
+		}else{
+			printf("(%f x^%d)",crrPoly[i],degree-i);		
+		}
+		
 	}
 	printf(" / (x - %f) \n",root1);
 	// printf("/ (x-%f) \n",root);
 	printf("The Quotient is:\n");
 	for (i = 0; i < degree; ++i)
-	{
-		printf("(%f x^%d) +",polyQtnt[i],degree-i-1);
+	{	
+		if(i <degree-1){
+			printf("(%f x^%d) +",polyQtnt[i],degree-i-1);
+		}else{
+			printf("(%f x^%d)",polyQtnt[i],degree-i-1);
+		}
 	}
 	printf("\n");
-	printf("Remainder is %f",Remainder);
+	printf("Remainder is %f\n",Remainder);
+	getchar();
 }
 #endif
 //========================================================================================================================

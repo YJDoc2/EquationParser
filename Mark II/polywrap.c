@@ -160,11 +160,16 @@ Result solvePoly(char in[]){
     return ret;
     //displayRoot();
 }
-
-/*void main(){
+/* 
+void main(){
+    Result ret;
+    char in[175];
+    fgets(in,150,stdin);
+    in[strlen(in)-1] = '\0';
+    ret = solvePoly(in);
     
     
-}*/
+} */
 
 
 #endif
