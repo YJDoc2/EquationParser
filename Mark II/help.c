@@ -23,7 +23,7 @@ void showHelp()
     printf("----->Default Variables are defined as $0 to $9.Default Named Variable is Ans,which stores the answer of last operation.\n");
     printf("----->To store a value in variable just use variableName = equation. Variable name can be user defined or $0 to $9.\n");
     printf("----->To use value of variables or constants in equation, use their name or $0 to $9 for default variable.\n");
-    printf("----->Supported Operations Are :\n- for Unery negation\n+ for addition\n- for subtraction\n* for multiplication\n/ for division\n%% for modulo or remainder\n^ for exponentiation.(NOTE :only positive values are supported as base of fractional powers)\n");
+    printf("----->Supported Operations Are :\n\t- for Unary negation\n\t+ for addition\n\t- for subtraction\n\t* for multiplication\n\t/ for division\n\t%% for modulus or remainder\n\t^ for exponentiation.(NOTE :only positive values are supported as base of fractional powers)\n");
     printf("-----------------------------------------------------------------------------------------------------------------------\n\n");
     printf(">>>>>>Inbuilt functions :\n\n");
     printf("----->NOTE: All functions are case sensitive.\n");

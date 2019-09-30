@@ -1,6 +1,6 @@
 # EquationParser
 
-This is Repo of Equation Parser Project Done as Data Structure Project in S.E.
+This is Repo of Equation Parser Project Done as Data Structure Project in S.E.  
 Developed By Vatsal Soni,Yashodhan Joshi,Yatharth Vyas.
 
 ### Versions
