@@ -83,7 +83,7 @@ It solves the System by reducing Augmented Matrix to Upper triangular matrix.
 Compare Equations to a1x1+a2x2+...+anxn =constant, and enter coefficients to solve the equations.  
 In case System is inconsistent it will show a message saying so.
 
-##### solve
+###### solve
 
 First give number of variables and then enter equations one by one.  
 It can only solve System of equations upto 9 variables,For n variables use variables x0 to xn-1.  
@@ -100,18 +100,18 @@ This has three modes :
 </ul>
 This solves the polynomial equations by Newton-Raphson Method, accurate upto approximately 0.0001.
 
-##### Coeff
+###### Coeff
 
 Compare Polynomial Equation to anX^n+an-1X^n-1+...+a1x+constant =0,and give coefficients.  
 The real roots of equation will be displayed.If no real roots are found it will show a message saying so.
 
-##### div
+###### div
 
 Give r of the dividing linear factor 'x-r'.
 Compare Polynomial Equation to anX^n+an-1X^n-1+...+a1x+constant =0,and give coefficients.  
 The division and remainder will be displayed.
 
-#### parsing
+###### parsing
 
 Enter Equation in format anx^n+an-1x^n-1+...+a1x+constant = 0.  
 One can give algebric eqations containing variables and constants NOT containing x and values of them will be used.  

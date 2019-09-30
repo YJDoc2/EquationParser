@@ -5,7 +5,7 @@ Developed By Vatsal Soni,Yashodhan Joshi,Yatharth Vyas.
 
 ### Versions
 
-Mark I : Supports Some Basic Algebric Operations.
+Mark I : Supports Some Basic Algebric Operations.  
 Mark II : Supports Algeric Operations,Solving System of Linear Equations, and Finding Real Roots of Polynomial Equations.
 
 ### Details
