@@ -95,6 +95,7 @@ Result solveLinear(){
         }
     det = determinant(tempM,numVars);
     if(-1E-36<det && 1E-36>det){
+        printf("NO UNIQUE SOLIUTIONS\n");//for temporary purpose.
         ret.status = MATH_ERROR;
         sprintf(ret.error_info,"Inconsistant or Infinite Solution Equations");
         return ret;
