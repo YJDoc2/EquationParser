@@ -78,7 +78,7 @@ void inputCoeff(){
             fflush(stdin);
             j==numVars+1?printf("Constant : "):printf("Coefficient of x%d: ",j-1);
             scanf("%f",&val);
-            if(val ==0){val = 1E-15;}
+            if(val ==0){val = 1E-7;}
             augmentedM[i][j] = val;
         }
     }
