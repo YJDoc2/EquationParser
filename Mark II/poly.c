@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
+#include<time.h>
 #include "./typedef.c"
 #include"./polydiv.c"
 float tempSum;
@@ -57,7 +58,7 @@ void evalPoly(int degree)
 	int i,j;
 	float tempRoot;
 	Result temp;
-
+	time_t t1,t2;
 	if(crrPoly[degree]==0){
 		
 		while(crrPoly[degree]==0){
@@ -77,12 +78,18 @@ void evalPoly(int degree)
 				return;
 			}
 			root1=temp.data;
+			time(&t1);
 			do
 			{
 				Remainder=polyDiv(degree-i);
 				getSum(degree-i);
 				tempRoot=root1;
 				root1=tempRoot-Remainder/tempSum;
+				time(&t2);
+				if(difftime(t2,t1)>7){
+					return;
+				}
+
 			}
 			while (absolute(Remainder)>=rootErr);				//Iterating the value of Root till Remainder is less than 0.001
 			for (j=0; j < degree-i; j++)			//Storing Quotient Array in our next Divisor Array
