@@ -10,7 +10,7 @@ float root()
 	if (t<0)
 	{
 		printf("Root(s) Not Defined \n");
-		return -19999.23;
+		return -1;
 	}
 	else
 	{
@@ -33,6 +33,10 @@ void getSum(int degree)
 	{
 		tempSum=root1*tempSum+polyQtnt[i];
 	}
+	if (tempSum==0)
+	{
+		tempSum=1;
+	}
 }
 void evalPoly(int degree)
 {
@@ -44,7 +48,7 @@ void evalPoly(int degree)
 		if (degree-i>1)	// For all cases except Last when the eqn will be linear
 		{
 			root1=root();
-			if (root1 == -19999.23)
+			if (root1 == -1)
 			{
 				return;
 			}
@@ -54,6 +58,7 @@ void evalPoly(int degree)
 				getSum(degree-i);
 				tempRoot=root1;
 				root1=tempRoot-Remainder/tempSum;
+				//printf("root1t=%f root=%f Remainder=%f tempSum=%f \n",root1,root,Remainder,tempSum);
 			}
 			while (absolute(Remainder)>=0.0001);				//Iterating the value of Root till Remainder is less than 0.0001
 			for (j=0; j < degree-i; j++)			//Storing Quotient Array in our next Divisor Array

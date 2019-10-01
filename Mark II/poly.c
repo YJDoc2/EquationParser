@@ -47,6 +47,10 @@ void getSum(int degree)
 	{
 		tempSum=root1*tempSum+polyQtnt[i];
 	}
+	if (tempSum==0)
+	{
+		tempSum=1;	
+	}
 }
 void evalPoly(int degree)
 {
@@ -55,8 +59,9 @@ void evalPoly(int degree)
 	Result temp;
 
 	if(crrPoly[degree]==0){
-		pushRoot(0);
+		
 		while(crrPoly[degree]==0){
+			pushRoot(0);
 			degree--;
 		}
 	}
@@ -65,7 +70,7 @@ void evalPoly(int degree)
 	{
 		
 
-		if (degree-i>1)	// For all cases except Last when the eqn will be linear
+		if (degree-i>1)	// For al cases except Last when the eqn will be linear
 		{	
 			temp = root();
 			if(temp.status == NO_REAL_ROOTS){
