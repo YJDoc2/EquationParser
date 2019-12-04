@@ -1,7 +1,9 @@
 # EquationParser
 
 This is Repo of Equation Parser Project Done as Data Structure Project in S.E.  
-Developed By Vatsal Soni,Yashodhan Joshi,Yatharth Vyas.
+Developed By Vatsal Soni,Yashodhan Joshi,Yatharth Vyas.  
+
+Also Check out  <a href ="https://github.com/YJDoc2/Equation-Parser-Interpreter"><b>the interpreter</b></a> designed for reading and parsing equations from text files by us.
 
 ### Versions
 
